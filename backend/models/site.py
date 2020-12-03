@@ -15,9 +15,9 @@ class Site(db.Model, BaseModel):
     latitude = db.Column(db.Float, nullable=False, unique=False)
     longitude = db.Column(db.Float, nullable=False, unique=False)
     category = db.Column(db.ARRAY(db.String), nullable=True, unique=False)
-    thumbnail_id = db.Column(db.String(1000), nullable=False, unique=False)
+    thumbnail_id = db.Column(db.String(1000), nullable=True, unique=False)
     image = db.Column(db.String(1000), nullable=True, unique=False)
-    weblink = db.Column(db.String(1000), nullable=False, unique=False)
+    weblink = db.Column(db.String(1000), nullable=True, unique=False)
     date_inscribed = db.Column(db.Integer, nullable=False, unique=False)
 
 
