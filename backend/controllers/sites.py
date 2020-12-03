@@ -43,6 +43,7 @@ def create():
     site_dictionary = request.get_json()
     # current user id 
     site_dictionary['user_id'] = g.current_user.id
+    print(site_dictionary)
     try:
       site = site_schema.load(site_dictionary)
     except ValidationError as e:

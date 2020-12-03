@@ -11,6 +11,6 @@ class PopulatedSiteSchema(ma.SQLAlchemyAutoSchema, BaseSchema):
     load_instance = True
     load_only = ('user_id',)
 
-  user_id = fields.Integer()
 
+  user_id = fields.Integer()
   user = fields.Nested('UserSchema', only=('id', 'username'))
