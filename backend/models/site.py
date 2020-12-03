@@ -1,5 +1,6 @@
 from app import db
 from models.base import BaseModel
+from models.user import User
 
 
 class Site(db.Model, BaseModel):
