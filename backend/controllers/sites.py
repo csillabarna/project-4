@@ -2,10 +2,11 @@ from flask import Blueprint, request, g
 
 from models.site import Site
 from models.comment import Comment
+from models.favourites import Favourites
 from serializers.site_serializer import SiteSchema
 from serializers.populated_site import PopulatedSiteSchema
 from serializers.comment_serializer import CommentSchema
-
+from serializers.favourites_serializer import FavouritesSchema
 from middleware.secure_route import secure_route
 from marshmallow import ValidationError
 
@@ -14,7 +15,7 @@ site_schema = SiteSchema()
 populated_site = PopulatedSiteSchema()
 
 comment_schema = CommentSchema()
-
+favourite_schema = FavouritesSchema()
 
 router = Blueprint(__name__, 'sites')
 
@@ -92,10 +93,6 @@ def remove(id):
 #  Add comment
 
 
-
-
-
-
 @router.route('/sites/<int:site_id>/comments', methods=['POST'])
 @secure_route
 def comment_create(site_id):
@@ -109,6 +106,8 @@ def comment_create(site_id):
     comment.site = site
     comment.save()
     return comment_schema.jsonify(comment)
+
+#  Edit a comment
 
 
 @router.route('/comments/<int:comment_id>', methods=['PUT'])
@@ -133,6 +132,8 @@ def edit_comment(comment_id):
 
     return comment_schema.jsonify(comment), 201
 
+# Delete a comment
+
 
 @router.route('/comments/<int:comment_id>', methods=['DELETE'])
 @secure_route
@@ -141,3 +142,40 @@ def remove_comment(comment_id):
 
     comment.remove()
     return {'message': f'comment {comment_id} has been deleted successfully'}
+
+# Get favourites
+
+
+@router.route('/favourites', methods=['GET'])
+def get_favourites():
+    favourites = Favourites.query.all()
+    return favourite_schema.jsonify(favourites, many=True), 200
+
+
+# Add Favourites
+@router.route('/favourites', methods=['POST'])
+@secure_route
+def add_favourite():
+    favourite_dictionary = request.get_json()
+    print(favourite_dictionary)
+    # current user id
+    favourite_dictionary['user_id'] = g.current_user.id
+    print(favourite_dictionary)
+    try:
+        favourite = favourite_schema.load(favourite_dictionary)
+    except ValidationError as e:
+        return {'errors': e.messages, 'message': f'{e}Something went wrong.'}
+
+    favourite.save()
+    return favourite_schema.jsonify(favourite), 200
+
+# Remove Favourites
+
+
+@router.route('/favourites/<int:id>', methods=['DELETE'])
+@secure_route
+def remove_favourite(id):
+    favourite = Favourites.query.get(id)
+
+    favourite.remove()
+    return {'message': f'Favourite {id} has been deleted successfully'}
