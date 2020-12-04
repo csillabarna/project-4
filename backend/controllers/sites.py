@@ -2,10 +2,11 @@ from flask import Blueprint, request, g
 
 from models.site import Site
 from models.comment import Comment
+from models.favourites import Favourites
 from serializers.site_serializer import SiteSchema
 from serializers.populated_site import PopulatedSiteSchema
 from serializers.comment_serializer import CommentSchema
-
+from serializers.favourites_serializer import FavouritesSchema
 from middleware.secure_route import secure_route
 from marshmallow import ValidationError
 
@@ -14,7 +15,7 @@ site_schema = SiteSchema()
 populated_site = PopulatedSiteSchema()
 
 comment_schema = CommentSchema()
-
+favourite_schema = FavouritesSchema()
 
 router = Blueprint(__name__, 'sites')
 
@@ -54,6 +55,8 @@ def create():
     return site_schema.jsonify(site), 200
 
 # edit site
+
+
 @router.route('/sites/<int:id>', methods=['PUT'])
 @secure_route
 def edit_site(id):
@@ -77,6 +80,8 @@ def edit_site(id):
     return site_schema.jsonify(site), 201
 
 # delete site
+
+
 @router.route('/sites/<int:id>', methods=['DELETE'])
 @secure_route
 def remove(id):
@@ -101,6 +106,8 @@ def comment_create(site_id):
     comment.save()
     return comment_schema.jsonify(comment)
 
+#  Edit a comment
+
 
 @router.route('/comments/<int:comment_id>', methods=['PUT'])
 @secure_route
@@ -124,6 +131,8 @@ def edit_comment(comment_id):
 
     return comment_schema.jsonify(comment), 201
 
+# Delete a comment
+
 
 @router.route('/comments/<int:comment_id>', methods=['DELETE'])
 @secure_route
@@ -133,29 +142,39 @@ def remove_comment(comment_id):
     comment.remove()
     return {'message': f'comment {comment_id} has been deleted successfully'}
 
+# Get favourites
 
 
-# function sendVer(req, res) {
-#   const id = req.params.userId
-#   Users
-#     .findById(id)
-#     .then(user => {
-#       if (!user) return res.send({
-#         message: 'No user found'
-#       })
-#       const msg = {
-#         from: 'FindaPint <lee@leejburgess.co.uk>',
-#         to: `${user.email}`,
-#         subject: 'Verify Email',
-#         html: `To verify email please follow this link
-#         https://project-3-adam.herokuapp.com/email/ver/${user._id}
-#         Click here to add your email address to a mailing list`
-#       }
-#       sgMail
-#         .send(msg)
-#         .then((user) =>{
-#           res.send(user)
-#         })
-#         .catch((error) => res.send(error))
-#     })
-# }
+@router.route('/favourites', methods=['GET'])
+def get_favourites():
+    favourites = Favourites.query.all()
+    return favourite_schema.jsonify(favourites, many=True), 200
+
+
+# Add Favourites
+@router.route('/favourites', methods=['POST'])
+@secure_route
+def add_favourite():
+    favourite_dictionary = request.get_json()
+    print(favourite_dictionary)
+    # current user id
+    favourite_dictionary['user_id'] = g.current_user.id
+    print(favourite_dictionary)
+    try:
+        favourite = favourite_schema.load(favourite_dictionary)
+    except ValidationError as e:
+        return {'errors': e.messages, 'message': f'{e}Something went wrong.'}
+
+    favourite.save()
+    return favourite_schema.jsonify(favourite), 200
+
+# Remove Favourites
+
+
+@router.route('/favourites/<int:id>', methods=['DELETE'])
+@secure_route
+def remove_favourite(id):
+    favourite = Favourites.query.get(id)
+
+    favourite.remove()
+    return {'message': f'Favourite {id} has been deleted successfully'}

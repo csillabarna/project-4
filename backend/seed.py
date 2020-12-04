@@ -4,6 +4,7 @@ from app import app, db
 from models.site import Site
 from models.user import User
 from models.comment import Comment
+from models.favourites import Favourites
 
 with app.app_context():
 
@@ -68,6 +69,12 @@ with app.app_context():
         site=alhambra
     )
     print('Comment created')
+
+    favourite = Favourites(
+        user=balta,
+        site=alhambra
+    )
+    print('Favourites created')
 
     print('Adding to database:')
 
