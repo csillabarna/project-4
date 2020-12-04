@@ -9,7 +9,7 @@ const Signup = (props) => {
     username: '',
     email: '',
     password: '',
-    passwordConfirmation: ''
+    password_confirmation: ''
   })
 
   function handleChange(event) {
@@ -69,8 +69,8 @@ const Signup = (props) => {
       <input
         type="password"
         onChange ={handleChange}
-        value={formData.passwordConfirmation}
-        name="passwordConfirmation"
+        value={formData.password_confirmation}
+        name="password_confirmation"
       />
     </div>
     

@@ -90,9 +90,8 @@ def remove(id):
     site.remove()
     return {'message': f'site {id} has been deleted successfully'}
 
+
 #  Add comment
-
-
 @router.route('/sites/<int:site_id>/comments', methods=['POST'])
 @secure_route
 def comment_create(site_id):
