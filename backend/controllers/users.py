@@ -1,6 +1,9 @@
 from flask import Blueprint, request
-from models.user import User
+from models.user_serializer import User
 from serializers.user_serializer import UserSchema
+from sendgrid.helpers.mail import Mail
+from sendgrid import SendGridAPIClient
+import os
 
 
 user_schema = UserSchema()
@@ -31,4 +34,21 @@ def login():
 
   return{'token': token, 'message': f'Welcome back {email}'}
 
+
+
+
+message = Mail(
+   from_email = "whprojectapp2020@gmail.com",
+   to_emails = "barnacsilla89@gmail.com",
+   subject = "Sending with SendGrid is Fun",
+   content = " easy to do anywhere, even with Python"
+   )
+try:
+  sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))   
+  response = sg.send(message)
+  print(response.status_code)
+  print(response.body)
+  print(response.headers)
+except Exception as e:
+  print(e)
 

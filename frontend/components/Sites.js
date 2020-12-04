@@ -21,7 +21,7 @@ const Sites = () => {
           className="column is-one-third-desktop is-half-tablet is-half-mobile"
           key={index}
         >
-          <Link to={`/sites/${site._id}`}>
+          <Link to={`/sites/${site.id}`}>
             <div className="card">
               <div className="card-content">
                 <div className="card-image">

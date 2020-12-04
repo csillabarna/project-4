@@ -63,7 +63,7 @@ with app.app_context():
 
     comment = Comment(
         content='I love this place ',
-        rating=5,
+        # rating=5,
         user=balta,
         site=alhambra
     )

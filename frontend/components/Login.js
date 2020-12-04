@@ -26,10 +26,10 @@ const Login = (props) => {
     event.preventDefault()
 
     axios.post('api/login', loginData)
-      .then(resp => {
-        console.log(resp.data)
-        localStorage.setItem('token', resp.data.token)
-        props.history.push('/characters')
+      .then(res => {
+        console.log(res.data)
+        localStorage.setItem('token', res.data.token)
+        props.history.push('/sites')
 
       })
 

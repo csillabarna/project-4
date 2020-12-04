@@ -9,7 +9,7 @@ class Comment(db.Model, BaseModel):
   __tablename__ = 'comments'
 
   content = db.Column(db.Text, nullable=False)
-  rating = db.Column(db.Integer, nullable=False)
+  # rating = db.Column(db.Integer, nullable=False)
   user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
   site_id = db.Column(db.Integer, db.ForeignKey('sites.id'))
 

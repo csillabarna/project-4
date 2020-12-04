@@ -13,6 +13,7 @@ class PopulatedSiteSchema(ma.SQLAlchemyAutoSchema, BaseSchema):
 
 
   user_id = fields.Integer()
-  comments = fields.Nested('CommentSchema', many=True)
 
+
+  comments = fields.Nested('CommentSchema', many=True)
   user = fields.Nested('UserSchema', only=('id', 'username'))

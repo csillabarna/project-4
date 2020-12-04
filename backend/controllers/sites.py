@@ -54,8 +54,6 @@ def create():
     return site_schema.jsonify(site), 200
 
 # edit site
-
-
 @router.route('/sites/<int:id>', methods=['PUT'])
 @secure_route
 def edit_site(id):
@@ -79,8 +77,6 @@ def edit_site(id):
     return site_schema.jsonify(site), 201
 
 # delete site
-
-
 @router.route('/sites/<int:id>', methods=['DELETE'])
 @secure_route
 def remove(id):
@@ -89,13 +85,8 @@ def remove(id):
     site.remove()
     return {'message': f'site {id} has been deleted successfully'}
 
+
 #  Add comment
-
-
-
-
-
-
 @router.route('/sites/<int:site_id>/comments', methods=['POST'])
 @secure_route
 def comment_create(site_id):
@@ -141,3 +132,30 @@ def remove_comment(comment_id):
 
     comment.remove()
     return {'message': f'comment {comment_id} has been deleted successfully'}
+
+
+
+# function sendVer(req, res) {
+#   const id = req.params.userId
+#   Users
+#     .findById(id)
+#     .then(user => {
+#       if (!user) return res.send({
+#         message: 'No user found'
+#       })
+#       const msg = {
+#         from: 'FindaPint <lee@leejburgess.co.uk>',
+#         to: `${user.email}`,
+#         subject: 'Verify Email',
+#         html: `To verify email please follow this link
+#         https://project-3-adam.herokuapp.com/email/ver/${user._id}
+#         Click here to add your email address to a mailing list`
+#       }
+#       sgMail
+#         .send(msg)
+#         .then((user) =>{
+#           res.send(user)
+#         })
+#         .catch((error) => res.send(error))
+#     })
+# }
