@@ -20,7 +20,6 @@ class Site(db.Model, BaseModel):
     weblink = db.Column(db.String(1000), nullable=True, unique=False)
     date_inscribed = db.Column(db.Integer, nullable=False, unique=False)
 
-
 # ONE -MANY relationship
 #  if is nullable =false then we need to have for every site a user, we need to add the ONE to  the many side 
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)

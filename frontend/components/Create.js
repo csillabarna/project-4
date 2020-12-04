@@ -10,13 +10,13 @@ const Create = (props) => {
   const [addFormData, updateAddFormData] = useState({
     name: '',
     region: '',
-    latitude: '',
-    longitude: '',
+    latitude: Number,
+    longitude: Number,
     country: '',
     province: '',
     description: '',
     image: '',
-    date_inscribed: 0
+    date_inscribed: Number
   })
 
   const inputFields = ['name', 'region', 'latitude', 'longitude','country'
