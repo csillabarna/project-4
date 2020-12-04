@@ -3,7 +3,7 @@ from app import app, db
 
 from models.site import Site
 from models.user import User
-
+from models.comment import Comment
 
 with app.app_context():
 
@@ -46,8 +46,8 @@ with app.app_context():
 
         region="Europe and North America",
         name="Palau de la Música Catalana and Hospital de Sant Pau, Barcelona",
-        latitude = 41.38778,
-        longitude= 2.175,
+        latitude=41.38778,
+        longitude=2.175,
         country="Spain",
         province="Province of Barcelona, Autonomous Community of Catalonia",
         description="These are two of the finest contributions to Barcelona's architecture by the Catalan art nouveau architect Lluís Domènech i Montaner. The Palau de la Música Catalana is an exuberant steel-framed structure full of light and space, and decorated by many of the leading designers of the day. The Hospital de Sant Pau is equally bold in its design and decoration, while at the same time perfectly adapted to the needs of the sick.",
@@ -55,16 +55,25 @@ with app.app_context():
         image='https://upload.wikimedia.org/wikipedia/commons/thumb/d/d8/Alhambradesdegeneralife.jpg/1024px-Alhambradesdegeneralife.jpg',
         weblink="https://whc.unesco.org/en/list/804",
         date_inscribed=1997,
-        user=balta
+        user=csilla
 
     )
 
     print('Sites created')
 
+    comment = Comment(
+        content='I love this place ',
+        rating=5,
+        user=balta,
+        site=alhambra
+    )
+    print('Comment created')
+
     print('Adding to database:')
-    
+
     db.session.add(alhambra)
     db.session.add(palau)
+    db.session.add(comment)
 
     db.session.commit()
     print('Completed!')

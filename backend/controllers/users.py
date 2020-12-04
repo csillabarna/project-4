@@ -20,7 +20,7 @@ def login():
   data = request.get_json()
 
   user = User.query.filter_by(email=data['email']).first()
-
+  email = data['email']
   if not user:
     return{'message': 'no user found with this email'},200
 
@@ -29,6 +29,6 @@ def login():
 
   token = user.generate_token()
 
-  return{'token': token, 'message': 'Welcome back'}
+  return{'token': token, 'message': f'Welcome back {email}'}
 
 

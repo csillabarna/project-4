@@ -10,7 +10,7 @@ class UserSchema(ma.SQLAlchemyAutoSchema, BaseSchema):
       model = User
       load_instance = True
       exclude = ('password_hash',)
-      load_only = ('email','password')
+      load_only = ('username', 'email', 'password')
 
     password = fields.String(required=True)  
 
