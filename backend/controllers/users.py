@@ -1,54 +1,81 @@
 from flask import Blueprint, request
-from models.user_serializer import User
+from models.user import User
 from serializers.user_serializer import UserSchema
-from sendgrid.helpers.mail import Mail
-from sendgrid import SendGridAPIClient
+from serializers.populated_user import PopulatedUserSchema
+from middleware.secure_route import secure_route
+
+# from sendgrid.helpers.mail import Mail
+# from sendgrid import SendGridAPIClient
 import os
 
 
 user_schema = UserSchema()
+populated_user_schema = PopulatedUserSchema()
 
 router = Blueprint(__name__, 'users')
 # register user
+
+
 @router.route('/signup', methods=['POST'])
 def signup():
-  request_body = request.get_json()
-  user = user_schema.load(request_body)
-  user.save()
-  return user_schema.jsonify(user), 200
+    request_body = request.get_json()
+    user = user_schema.load(request_body)
+    user.save()
+    return user_schema.jsonify(user), 200
 
-#login user
+# login user
+
+
 @router.route('/login', methods=['POST'])
 def login():
-  data = request.get_json()
+    data = request.get_json()
 
-  user = User.query.filter_by(email=data['email']).first()
-  email = data['email']
-  if not user:
-    return{'message': 'no user found with this email'},200
+    user = User.query.filter_by(email=data['email']).first()
+    email = data['email']
+    if not user:
+        return{'message': 'no user found with this email'}, 200
 
-  if not user.validate_password(data['password']):
-    return{'message': 'Unauthorized'}, 402
+    if not user.validate_password(data['password']):
+        return{'message': 'Unauthorized'}, 402
 
-  token = user.generate_token()
+    token = user.generate_token()
 
-  return{'token': token, 'message': f'Welcome back {email}'}
+    return{'token': token, 'message': f'Welcome back {email}'}
+
+# Get all users + Favourites
 
 
+@router.route('/users', methods=['GET'])
+@secure_route
+def get_users():
+    users = User.query.all()
+    return populated_user_schema.jsonify(users, many=True), 200
+
+# get single user + Favourites
 
 
-message = Mail(
-   from_email = "whprojectapp2020@gmail.com",
-   to_emails = "barnacsilla89@gmail.com",
-   subject = "Sending with SendGrid is Fun",
-   content = " easy to do anywhere, even with Python"
-   )
-try:
-  sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))   
-  response = sg.send(message)
-  print(response.status_code)
-  print(response.body)
-  print(response.headers)
-except Exception as e:
-  print(e)
+@router.route('/users/<int:id>', methods=['GET'])
+@secure_route
+def get_single_site(id):
+    user = User.query.get(id)
 
+    if not user:
+        return {'message': 'User not found'}, 404
+
+    return populated_user_schema.jsonify(user), 200
+
+
+# message = Mail(
+#    from_email = "whprojectapp2020@gmail.com",
+#    to_emails = "barnacsilla89@gmail.com",
+#    subject = "Sending with SendGrid is Fun",
+#    content = " easy to do anywhere, even with Python"
+#    )
+# try:
+#   sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
+#   response = sg.send(message)
+#   print(response.status_code)
+#   print(response.body)
+#   print(response.headers)
+# except Exception as e:
+#   print(e)
