@@ -22,7 +22,7 @@ def signup():
     request_body = request.get_json()
     user = user_schema.load(request_body)
     user.save()
-    # send(user)
+    send(user)
     return user_schema.jsonify(user), 200
 
 
@@ -68,7 +68,9 @@ def login():
 
     if not user.validate_password(data['password']):
         return{'message': 'Unauthorized'}, 402
-
+    #for email verification 
+    if not user.is_confirmed:
+        return {'message': 'Please validate your email address'}, 402
     token = user.generate_token()
 
     return{'token': token, 'message': f'Welcome back {email}'}
