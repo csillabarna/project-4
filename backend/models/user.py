@@ -16,6 +16,8 @@ class User(db.Model, BaseModel):
   email = db.Column(db.String(128), nullable=False, unique=True)
   password_hash = db.Column(db.String(128), nullable=True)
 
+
+
   @hybrid_property
   def password(self):
     pass

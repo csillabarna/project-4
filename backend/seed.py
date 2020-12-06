@@ -71,8 +71,8 @@ with app.app_context():
     print('Comment created')
 
     favourite = Favourites(
-        user=balta,
-        site=alhambra
+        user_id=1,
+        site_id=1
     )
     print('Favourites created')
 

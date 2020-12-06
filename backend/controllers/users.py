@@ -3,29 +3,50 @@ from models.user import User
 from serializers.user_serializer import UserSchema
 from serializers.populated_user import PopulatedUserSchema
 from middleware.secure_route import secure_route
-
-# from sendgrid.helpers.mail import Mail
-# from sendgrid import SendGridAPIClient
 import os
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail
+
+
 
 
 user_schema = UserSchema()
 populated_user_schema = PopulatedUserSchema()
 
 router = Blueprint(__name__, 'users')
+
+
 # register user
-
-
 @router.route('/signup', methods=['POST'])
 def signup():
     request_body = request.get_json()
     user = user_schema.load(request_body)
+    # user.is_confirmed == False
     user.save()
+    send(user)
     return user_schema.jsonify(user), 200
 
+
+
+
+def send(user):
+  base_URL = 'http://localhost:8001'
+  message = Mail(from_email = "whprojectapp2020@gmail.com",
+    to_emails = user.email,
+    subject = "Email verificaton from WH",
+    html_content = f'<a href="{base_URL}/verification/{user.id}">Please verify your email address</a>'
+    )
+  try:
+    sg = SendGridAPIClient(os.environ['SENDGRID_API_KEY'])
+    response = sg.send(message)
+    print(response.status_code)
+    print(response.body)
+    print(response.headers)
+  except Exception as e:
+    print(e.message)
+ 
+
 # login user
-
-
 @router.route('/login', methods=['POST'])
 def login():
     data = request.get_json()
@@ -65,17 +86,3 @@ def get_single_site(id):
     return populated_user_schema.jsonify(user), 200
 
 
-# message = Mail(
-#    from_email = "whprojectapp2020@gmail.com",
-#    to_emails = "barnacsilla89@gmail.com",
-#    subject = "Sending with SendGrid is Fun",
-#    content = " easy to do anywhere, even with Python"
-#    )
-# try:
-#   sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
-#   response = sg.send(message)
-#   print(response.status_code)
-#   print(response.body)
-#   print(response.headers)
-# except Exception as e:
-#   print(e)
