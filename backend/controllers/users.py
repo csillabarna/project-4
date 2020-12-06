@@ -55,7 +55,7 @@ def get_users():
 
 
 @router.route('/users/<int:id>', methods=['GET'])
-@secure_route
+# @secure_route
 def get_single_site(id):
     user = User.query.get(id)
 

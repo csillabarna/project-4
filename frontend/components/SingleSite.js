@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
 import { isCreator } from '../lib/auth'
+import Map from './Map'
+
 
 
 const SingleSite = (props) => {
@@ -24,16 +26,8 @@ const SingleSite = (props) => {
 
 
 
-  // if (!site.id) {
-  //   return <div className="section">
-  //     <div className="container">
-  //       <div className="title">
-  //         Loading ...
-  //       </div>
-  //     </div>
-  //   </div>
-  // }
 
+// console.log(site)
 
   function handleDelete() {
     axios.delete(`/api/sites/${siteId}`, {
@@ -68,7 +62,15 @@ const SingleSite = (props) => {
     
   }
 
-
+  if (!site.latitude) {
+    return <div className="section">
+      <div className="container">
+        <div className="title">
+          Loading ...
+        </div>
+      </div>
+    </div>
+  }
   return <div>
     <div className="section">
       <div className="container">
@@ -85,6 +87,8 @@ const SingleSite = (props) => {
         </Link>}
         <div>
           <br />
+
+          <div className="columns is-centered m-1 is-mobile"><Map site={site} /></div>
           <br />
         </div>
 

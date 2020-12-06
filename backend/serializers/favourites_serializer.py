@@ -14,3 +14,4 @@ class FavouritesSchema(ma.SQLAlchemyAutoSchema, BaseSchema):
 
   site_id = fields.Integer()
   # site = fields.Nested('SiteSchema', only=('id',))
+  site = fields.Nested('SiteSchema', only=('thumbnail_id', 'name', 'country'))

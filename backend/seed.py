@@ -15,13 +15,19 @@ with app.app_context():
     balta = User(
         username="balta",
         email="balta@balta.com",
-        password="pass"
+        password="pass",
+        user_bio="I'm a Spanish web developer and love travelling",
+        user_city="London",
+        user_avatar="https://pbs.twimg.com/profile_images/2624763257/lz5pautt5yimot9nwqow_400x400.png"
     )
 
     csilla = User(
         username="csilla",
         email="csilla@csilla.com",
-        password="pass"
+        password="pass",
+        user_bio="I'm a Hungarian web developer and love travelling",
+        user_city="London",
+        user_avatar="https://pbs.twimg.com/profile_images/2624763257/lz5pautt5yimot9nwqow_400x400.png"
     )
 
     balta.save()

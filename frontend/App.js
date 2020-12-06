@@ -11,6 +11,7 @@ import Login from './components/Login'
 import Home from './components/Home'
 import Create from './components/Create'
 import SingleSite from './components/SingleSite'
+import User from './components/User'
 
 
 
@@ -27,6 +28,8 @@ const App = () => (
       <Route exact path="/login" component={Login} />
 
       <Route exact path="/sites/add-site" component={Create} />
+      <Route exact path='/user/:userId' component={User} />
+
 
 
     </Switch>
