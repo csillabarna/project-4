@@ -15,13 +15,15 @@ with app.app_context():
     balta = User(
         username="balta",
         email="balta@balta.com",
-        password="pass"
+        password="pass",
+        is_confirmed = True
     )
 
     csilla = User(
         username="csilla",
         email="csilla@csilla.com",
-        password="pass"
+        password="pass",
+        is_confirmed = True
     )
 
     balta.save()

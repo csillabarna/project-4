@@ -15,6 +15,8 @@ class User(db.Model, BaseModel):
   username = db.Column(db.String(15), nullable=False, unique=True)
   email = db.Column(db.String(128), nullable=False, unique=True)
   password_hash = db.Column(db.String(128), nullable=True)
+#email verification flag
+  is_confirmed = db.Column(db.Boolean, unique=False, default=False)
 
 
 

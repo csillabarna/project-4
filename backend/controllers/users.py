@@ -21,14 +21,13 @@ router = Blueprint(__name__, 'users')
 def signup():
     request_body = request.get_json()
     user = user_schema.load(request_body)
-    # user.is_confirmed == False
     user.save()
-    send(user)
+    # send(user)
     return user_schema.jsonify(user), 200
 
 
 
-
+# user verification by email 
 def send(user):
   base_URL = 'http://localhost:8001'
   message = Mail(from_email = "whprojectapp2020@gmail.com",
@@ -45,6 +44,17 @@ def send(user):
   except Exception as e:
     print(e.message)
  
+#verify user
+@router.route('/verification/<int:id>',methods=['PUT'])
+def confirm(id):
+  current_user = User.query.get(id)
+  if current_user.is_confirmed:
+    return f'Email already verified'
+  else:
+   current_user.is_confirmed = True
+   current_user.save()
+   return f'Validation has been successful for {current_user.id} user'
+
 
 # login user
 @router.route('/login', methods=['POST'])
