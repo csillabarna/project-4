@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faHeart } from '@fortawesome/free-solid-svg-icons'
+import MapGL, { Marker } from 'react-map-gl'
 
 
 const Sites = () => {
@@ -37,6 +39,7 @@ const Sites = () => {
                     <p className="subtitle is-4">
                       {site.country}
                     </p>
+                    <span><FontAwesomeIcon color="green" icon={faHeart} /></span>
                   </div>
                 </div>
               </div>
