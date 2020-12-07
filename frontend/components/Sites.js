@@ -17,13 +17,12 @@ const Sites = () => {
     if (search){
       axios.get(`api/search/${search}`)
         .then(res => {
-          console.log(res.data)
           updateSites(res.data)
         })
     } else {
       axios.get('api/sites')
         .then(res => {
-          console.log(res.data)
+          // console.log(res.data)
           updateSites(res.data)
         })
     }
