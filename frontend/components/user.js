@@ -8,7 +8,7 @@ const User = (props) => {
   console.log(props)
   const userId = props.match.params.userId
   const [user, updateUser] = useState([])
-  const [comments, updateComments] = useState([])
+  // const [comments, updateComments] = useState([])
 
 
   useEffect(() => {
@@ -19,14 +19,14 @@ const User = (props) => {
       })
   }, [])
 
-  useEffect(() => {
-    axios.get(`/api/users/${userId}/comments`)
-      .then(resp => {
-        updateComments(resp.data)
-      })
-  }, [])
+  // useEffect(() => {
+  //   axios.get(`/api/users/${userId}/comments`)
+  //     .then(resp => {
+  //       updateComments(resp.data)
+  //     })
+  // }, [])
 
-  console.log(comments)
+  // console.log(comments)
 
   if (!user.username) {
     return <div className="section">
@@ -39,7 +39,7 @@ const User = (props) => {
     </div>
   }
 
-  console.log(user.user_avatar)
+  // console.log(user.user_avatar)
   return <div className="container is-fluid mt-5">
     <div className="columns">
       {/* <div className="column">
@@ -60,7 +60,7 @@ const User = (props) => {
           <div className="tile is-vertical is-parent">
 
 
-            {user.favourites.map((favourite, index) => {
+            {user.favourites && user.favourites.map((favourite, index) => {
               return <div className="tile is-child box" key={index}>
                 <Link to={`/sites/${favourite.site_id}`} >
 
