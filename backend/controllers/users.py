@@ -75,8 +75,8 @@ def login():
 
     return{'token': token, 'message': f'Welcome back {email}'}
 
-# Get all users + Favourites
 
+# Get all users + Favourites
 
 @router.route('/users', methods=['GET'])
 @secure_route

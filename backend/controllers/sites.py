@@ -27,6 +27,14 @@ def index():
     return site_schema.jsonify(sites, many=True), 200
 
 
+#search
+@router.route('/search/<name>', methods=['GET'])
+def search(name):
+    sites = Site.query.all()
+    matches = [site for site in sites if name.lower() in site.country.lower()]
+    return site_schema.jsonify(matches, many=True), 200
+
+
 # get single site
 @router.route('/sites/<int:id>', methods=['GET'])
 def get_single_site(id):

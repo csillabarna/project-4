@@ -8,25 +8,25 @@ const User = (props) => {
   console.log(props)
   const userId = props.match.params.userId
   const [user, updateUser] = useState([])
-  // const [comments, updateComments] = useState([])
+  // const [fav, updateFav] = useState([])
 
 
   useEffect(() => {
     axios.get(`/api/users/${userId}`)
-      .then(resp => {
-        console.log(resp.data)
-        updateUser(resp.data)
+      .then(res => {
+        console.log(res.data)
+        updateUser(res.data)
       })
   }, [])
 
   // useEffect(() => {
-  //   axios.get(`/api/users/${userId}/comments`)
-  //     .then(resp => {
-  //       updateComments(resp.data)
+  //   axios.get('/api/favourites')
+  //     .then(res => {
+  //       updateFav(res.data)
   //     })
   // }, [])
 
-  // console.log(comments)
+  // console.log(fav)
 
   if (!user.username) {
     return <div className="section">

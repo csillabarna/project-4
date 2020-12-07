@@ -7,16 +7,50 @@ import MapGL, { Marker } from 'react-map-gl'
 
 
 const Sites = () => {
+  const [search, updateSearch] = useState('')
+  const [searched, updateSearched] = useState('')
+
+
   const [sites, updateSites] = useState([])
+
   useEffect(() => {
-    axios.get('api/sites')
-      .then(res => {
-        console.log(res.data)
-        updateSites(res.data)
-      })
-  }, [])
+    if (search){
+      axios.get(`api/search/${search}`)
+        .then(res => {
+          console.log(res.data)
+          updateSites(res.data)
+        })
+    } else {
+      axios.get('api/sites')
+        .then(res => {
+          console.log(res.data)
+          updateSites(res.data)
+        })
+    }
+
+  }, [searched])
+
 
   return <>
+  <div className="columns">
+    <div className="field has-addons column">
+      <div className="control">
+        <input className="input is-family-code search"
+          placeholder="Search"
+          onChange={(event) => updateSearch(event.target.value)}
+          value={search} />
+      </div>
+      <div className="control">
+        <button className="button is-family-code is-dark"
+          onClick={() => {
+            updateSearched(search)
+          }}>
+          Search
+        </button>
+      </div>
+    </div>
+  </div>
+  
     <div className="columns is-multiline is-mobile">
       {sites.map((site, index) => {
         return <div
