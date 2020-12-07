@@ -25,10 +25,6 @@ const SingleSite = (props) => {
   }, [])
 
 
-
-
-// console.log(site)
-
   function handleDelete() {
     axios.delete(`/api/sites/${siteId}`, {
       headers: { Authorization: `Bearer ${token}` }
