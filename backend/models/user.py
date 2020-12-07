@@ -19,6 +19,9 @@ class User(db.Model, BaseModel):
     user_city = db.Column(db.String(128), nullable=False)
     password_hash = db.Column(db.String(128), nullable=True)
 
+    #email verification flag
+    is_confirmed = db.Column(db.Boolean, unique=False, default=False)
+
     @hybrid_property
     def password(self):
         pass

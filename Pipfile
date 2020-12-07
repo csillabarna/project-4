@@ -4,13 +4,13 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-flask = "*"
-flask-sqlalchemy = "*"
+Flask = "*"
+Flask-SQLAlchemy = "*"
 psycopg2-binary = "*"
 flask-marshmallow = "*"
 marshmallow-sqlalchemy = "*"
-flask-bcrypt = "*"
-pyjwt = "*"
+Flask-Bcrypt = "*"
+PyJWT = "*"
 sendgrid = "*"
 
 [dev-packages]

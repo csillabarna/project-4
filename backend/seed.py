@@ -18,7 +18,8 @@ with app.app_context():
         password="pass",
         user_bio="I'm a Spanish web developer and love travelling",
         user_city="London",
-        user_avatar="https://pbs.twimg.com/profile_images/2624763257/lz5pautt5yimot9nwqow_400x400.png"
+        user_avatar="https://pbs.twimg.com/profile_images/2624763257/lz5pautt5yimot9nwqow_400x400.png",
+        is_confirmed=True
     )
 
     csilla = User(
@@ -27,7 +28,8 @@ with app.app_context():
         password="pass",
         user_bio="I'm a Hungarian web developer and love travelling",
         user_city="London",
-        user_avatar="https://pbs.twimg.com/profile_images/2624763257/lz5pautt5yimot9nwqow_400x400.png"
+        user_avatar="https://pbs.twimg.com/profile_images/2624763257/lz5pautt5yimot9nwqow_400x400.png",
+        is_confirmed=True
     )
 
     balta.save()
@@ -77,8 +79,8 @@ with app.app_context():
     print('Comment created')
 
     favourite = Favourites(
-        user=balta,
-        site=alhambra
+        user_id=1,
+        site_id=1
     )
     print('Favourites created')
 
