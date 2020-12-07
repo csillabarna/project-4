@@ -89,6 +89,7 @@ with app.app_context():
     db.session.add(alhambra)
     db.session.add(palau)
     db.session.add(comment)
-
+    db.session.add(favourite)
+    
     db.session.commit()
     print('Completed!')

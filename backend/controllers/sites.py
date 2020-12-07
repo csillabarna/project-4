@@ -179,11 +179,12 @@ def add_favourite():
 # Remove Favourites
 
 
-@router.route('/favourites/<int:id>', methods=['DELETE'])
+@router.route('/favourites/<int:site_id>', methods=['DELETE'])
 @secure_route
-def remove_favourite(id):
-    favourite = Favourites.query.get(id)
+def remove_favourite(site_id):
+    user_id =g.current_user.id
+    favourite = Favourites.query.get((user_id, site_id))
     if not favourite:
         return {'message': 'Site not found in your favourites'}, 404
     favourite.remove()
-    return {'message': f'Favourite {id} has been deleted successfully'}
+    return {'message': f'Favourite for user :{user_id}  site id: {site_id } has been deleted successfully'}

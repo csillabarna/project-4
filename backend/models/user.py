@@ -14,9 +14,9 @@ class User(db.Model, BaseModel):
 
     username = db.Column(db.String(15), nullable=False, unique=True)
     email = db.Column(db.String(128), nullable=False, unique=True)
-    user_bio = db.Column(db.String(1000), nullable=False)
+    user_bio = db.Column(db.String(1000), nullable=True)
     user_avatar = db.Column(db.Text, nullable=True)
-    user_city = db.Column(db.String(128), nullable=False)
+    user_city = db.Column(db.String(128), nullable=True)
     password_hash = db.Column(db.String(128), nullable=True)
 
     #email verification flag
