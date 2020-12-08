@@ -150,7 +150,7 @@ def remove_comment(comment_id):
     comment.remove()
     return {'message': f'comment {comment_id} has been deleted successfully'}
 
-# Get favourites
+# Get all favourites
 
 
 @router.route('/favourites', methods=['GET'])
@@ -164,23 +164,11 @@ def get_favourites():
 @secure_route
 def add_favourite():
     favourite_dictionary = request.get_json()
-    print(g)
-    # current user id
     favourite_dictionary['user_id'] = g.current_user.id
-    print(favourite_dictionary['site_id'])
-    print(g.current_user)
-    print(request)
     try:
         favourite = favourite_schema.load(favourite_dictionary)
     except ValidationError as e:
         return {'errors': e.messages, 'message': f'{e}Something went wrong.'}
-    print(favourite.site_id)
-    # if not site:
-    #     return {'message': 'Site not found'}, 404
-
-    # if favourite['site_id'] != favourite_dictionary['site_id']:
-    #     return {'message': 'This site is already in your favourites'}, 401
-
     favourite.save()
     return favourite_schema.jsonify(favourite), 200
 

@@ -5,9 +5,9 @@ import { Link } from 'react-router-dom'
 
 
 const Signup = () => {
-  const [verification, setVerification] = useState(false)
+  const [closed, updateClosed] = useState(false)
   function modal() {
-    setVerification(true)
+    updateClosed(true)
   }
   const [formData, updateFormData] = useState({
   
@@ -44,10 +44,10 @@ const Signup = () => {
  
   return <>
   {/* alert */}
-    <Modal isOpen={verification}>
-      <p>Please check your email to confirm </p>
+    <Modal isOpen={closed}>
+      <p>Please check your inbox to confirm your email address </p>
       <div className="modal-buttons">
-        <Link to={'/'}><button className="button is-black">check email</button></Link>
+        <Link to={'/'}><button className="button is-black">ok</button></Link>
       </div>
     </Modal>
 

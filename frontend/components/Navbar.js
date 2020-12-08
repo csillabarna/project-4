@@ -23,15 +23,22 @@ const Navbar = (props) => {
 
   return <nav className="navbar is-black">
     <div className="navbar-menu is-active">
+      {localStorage.getItem('token') &&
+            <div className="navbar-start"> <span> Welcome back</span> <span></span>
+              <Link className="is-capitalized" to={`/user/${currentUserId}`}>
+                <strong className="is-link">{ user.username }</strong></Link></div>}
+
       <div className="navbar-end">
         <div className="navbar-item">
           <div className="buttons">
+            
+            {!localStorage.getItem('token') ?
+              <Link className="button is-light" to="/login">Login</Link> : ''}
+
             <Link className="button is-light" to="/">Home</Link>
             <Link className="button is-light" to="/sites">List of Sites</Link>
             <Link className="button is-light" to="/signup">Sign up</Link>
-            <Link className="button is-light" to="/login">Login</Link>
-            {localStorage.getItem('token') && <p>Welcome back <Link className="is-capitalized" to={`/user/${currentUserId}`}><strong className="is-link">{user.username}</strong></Link></p>}
-
+           
 
             {localStorage.getItem('token')
               && <Link className="button is-light" to="/sites/add-site">Add Site</Link>}

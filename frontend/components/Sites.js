@@ -9,7 +9,10 @@ import MapGL, { Marker } from 'react-map-gl'
 const Sites = () => {
   const [search, updateSearch] = useState('')
   const [searched, updateSearched] = useState('')
-
+  // const [fav, setFav] = useState(false)
+  // function add(){
+  //   return setFav(true) 
+  // }
 
   const [sites, updateSites] = useState([])
 
@@ -50,37 +53,40 @@ const Sites = () => {
     </div>
   </div>
   
-    <div className="columns is-multiline is-mobile">
-      {sites.map((site, index) => {
-        return <div
-          className="column is-one-third-desktop is-half-tablet is-half-mobile"
-          key={index}
-        >
-          <Link to={`/sites/${site.id}`}>
-            <div className="card">
-              <div className="card-content">
-                <div className="card-image">
-                  <figure className="image is-3by3">
-                    <img src={site.image} alt={site.name} />
-                  </figure>
-                </div>
-                <div className="media">
-                  <div className="media-content">
-                    <h2 className="title is-4">
-                      {site.name}
-                    </h2>
-                    <p className="subtitle is-4">
-                      {site.country}
-                    </p>
-                    <span><FontAwesomeIcon color="green" icon={faHeart} /></span>
-                  </div>
+  <div className="columns is-multiline is-mobile">
+    {sites.map((site, index) => {
+      return <div
+        className="column is-one-third-desktop is-half-tablet is-half-mobile"
+        key={index}
+      >
+        <Link to={`/sites/${site.id}`}>
+          <div className="card">
+            <div className="card-content">
+              <div className="card-image">
+                <figure className="image is-3by3">
+                  <img src={site.image} alt={site.name} />
+                </figure>
+              </div>
+              <div className="media">
+                <div className="media-content">
+                  <h2 className="title is-4">
+                    {site.name}
+                  </h2>
+                  <p className="subtitle is-4">
+                    {site.country}
+                  </p>
+                  
                 </div>
               </div>
             </div>
-          </Link>
-        </div>
-      })}
-    </div>
+          </div>
+        </Link>
+        {/* <button className="heart" onClick={add}>
+          <span><FontAwesomeIcon color="green" icon={faHeart} /></span>
+        </button> */}
+      </div>
+    })}
+  </div>
 
   </>
 

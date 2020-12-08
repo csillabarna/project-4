@@ -1,4 +1,4 @@
-from flask import Blueprint, request
+from flask import Blueprint, request, g
 from models.user import User
 from serializers.user_serializer import UserSchema
 from serializers.populated_user import PopulatedUserSchema
@@ -6,7 +6,7 @@ from middleware.secure_route import secure_route
 import os
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
-
+from marshmallow import ValidationError
 
 
 
@@ -76,22 +76,63 @@ def login():
     return{'token': token, 'message': f'Welcome back {email}'}
 
 
-# Get all users + Favourites
+#edit user
+@router.route('/users/<int:id>', methods=['PUT'])
+@secure_route
+def edit_user(id):
+    existing_user = User.query.get(id)
+    user_id = User.query.get(id).id
+    current_user_id = g.current_user.id
+    try:
+        user = user_schema.load(
+            request.get_json(),
+            instance=existing_user,
+            partial=True
+        )
+    except ValidationError as e:
+        return {'errors': e.messages, 'message': 'Something went wrong.'}
+    # added object level prem, means check who wants to edit the site
+    if user_id != current_user_id:
+        return {'message': 'Unauthorized'}, 401
 
+    user.save()
+
+    return user_schema.jsonify(user), 201
+
+
+#delete user
+@router.route('/users/<int:id>', methods=['DELETE'])
+@secure_route
+def remove(id):
+    user = User.query.get(id)
+    user_id = User.query.get(id).id
+    current_user_id = g.current_user.id
+    if user_id != current_user_id:
+        return {'message': 'Unauthorized'}, 401
+    user.remove()
+    return {'message': f'user {id} has been deleted successfully'}
+
+
+
+
+# Get all users + Favourites
 @router.route('/users', methods=['GET'])
 @secure_route
 def get_users():
     users = User.query.all()
     return populated_user_schema.jsonify(users, many=True), 200
 
+
+
 # get single user + Favourites
-
-
 @router.route('/users/<int:id>', methods=['GET'])
-# @secure_route
+@secure_route
 def get_single_site(id):
     user = User.query.get(id)
-
+    user_id = User.query.get(id).id
+    current_user_id = g.current_user.id
+    if user_id != current_user_id:
+        return {'message': 'Unauthorized'}, 401
     if not user:
         return {'message': 'User not found'}, 404
 
