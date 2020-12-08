@@ -32,17 +32,15 @@ const Navbar = (props) => {
         <div className="navbar-item">
           <div className="buttons">
             
-            {!localStorage.getItem('token') ?
-              <Link className="button is-light" to="/login">Login</Link> : ''}
+            
 
             <Link className="button is-light" to="/">Home</Link>
             <Link className="button is-light" to="/sites">List of Sites</Link>
-            <Link className="button is-light" to="/signup">Sign up</Link>
-           
-
-            {localStorage.getItem('token')
-              && <Link className="button is-light" to="/sites/add-site">Add Site</Link>}
-
+            {!localStorage.getItem('token') ?
+              <Link className="button is-light" to="/signup">Signup</Link> : ''}
+            {!localStorage.getItem('token') ?
+              <Link className="button is-light" to="/login">Login</Link> : ''}
+            
             {localStorage.getItem('token') && <button
               className="button is-light"
               onClick={handleLogout}

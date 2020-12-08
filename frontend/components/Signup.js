@@ -13,6 +13,9 @@ const Signup = () => {
   
     username: '',
     email: '',
+    user_bio: '',
+    user_avatar: '',
+    user_city: '',
     password: '',
     password_confirmation: ''
     
@@ -39,8 +42,6 @@ const Signup = () => {
       })  
     
   }
-  // console.log(formData)
-
  
   return <>
   {/* alert */}
@@ -68,6 +69,33 @@ const Signup = () => {
         onChange ={handleChange}
         value={formData.email}
         name="email"
+      />
+    </div>
+    <div>
+      <label>Bio</label>
+      <input
+        type="text"
+        onChange ={handleChange}
+        value={formData.user_bio}
+        name="user_bio"
+      />
+    </div>
+    <div>
+      <label>City</label>
+      <input
+        type="text"
+        onChange ={handleChange}
+        value={formData.user_city}
+        name="user_city"
+      />
+    </div>
+    <div>
+      <label>Profile Picture</label>
+      <input
+        type="text"
+        onChange ={handleChange}
+        value={formData.user_avatar}
+        name="user_avatar"
       />
     </div>
     <div>

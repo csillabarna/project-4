@@ -64,9 +64,7 @@ const Login = (props) => {
          <button>Login</button>
 
        </form>
-    <p>not registered yet?</p>
-      <Link to="/signup"><button>Signup</button></Link>
-</>
+    </>
 }
 
 export default Login

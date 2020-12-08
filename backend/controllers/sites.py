@@ -151,9 +151,19 @@ def remove_comment(comment_id):
     comment.remove()
     return {'message': f'comment {comment_id} has been deleted successfully'}
 
+#get single comment
+@router.route('/comments/<int:comment_id>', methods=['GET'])
+@secure_route
+def get_single_comment(comment_id):
+    comment = Comment.query.get(comment_id)
+
+    if not comment:
+        return {'message': 'comment not found'}, 404
+
+    return comment_schema.jsonify(comment), 200
+
+
 # Get all favourites
-
-
 @router.route('/favourites', methods=['GET'])
 def get_favourites():
     favourites = Favourites.query.all()
@@ -192,7 +202,7 @@ def remove_favourite(site_id):
 
 @router.route('/proxy-heritage', methods=['GET'])
 def heritage():
-  resp = requests.get(
+  res = requests.get(
       'https://data.opendatasoft.com/api/records/1.0/search/?dataset=world-heritage-list%40public-us&lang=ES&rows=2000&sort=date_inscribed')
-  heritage_list = resp.json()
+  heritage_list = res.json()
   return jsonify(heritage_list), 200
