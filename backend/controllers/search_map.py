@@ -1,6 +1,8 @@
 
 import pprint
 from googlemaps import Client as googlemaps
+from environment.config import Google_API
+
 # import googlemaps
 import time
 # from GoogleMapsAPIKey import get_my_key
@@ -9,7 +11,7 @@ import time
 # API_KEY = get_my_key()
 
 # Define our Client
-gmaps = googlemaps.Client(key='AIzaSyDVFJqgir_7vg1YEUKduW6HU7tiin74Zt4')
+gmaps = googlemaps.Client(key='Google_API')
 
 #Define our Search
 text_result = gmaps.find_place(

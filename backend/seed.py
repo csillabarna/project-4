@@ -1,4 +1,5 @@
 from flask import jsonify
+from environment.config import Google_API
 
 from app import app, db
 import pprint
@@ -81,7 +82,7 @@ with app.app_context():
     def google_id_mapper(record):
         name = record['name']
         resp_1 = requests.get(
-            f'https://maps.googleapis.com/maps/api/place/textsearch/json?query={name}&key=AIzaSyDVFJqgir_7vg1YEUKduW6HU7tiin74Zt4')
+            f'https://maps.googleapis.com/maps/api/place/textsearch/json?query={name}&key={Google_API}')
     # &facet=region&facet=states
         google_list = resp_1.json()
         google_place_id = google_list['results'][0]['place_id']
@@ -98,7 +99,7 @@ with app.app_context():
         pprint.pprint(place_id)
 
         resp_2 = requests.get(
-            f'https://maps.googleapis.com/maps/api/place/details/json?place_id={place_id}&fields=photo,name,formatted_address,geometry,icon,business_status,vicinity,international_phone_number,opening_hours,website&key=AIzaSyDVFJqgir_7vg1YEUKduW6HU7tiin74Zt4')
+            f'https://maps.googleapis.com/maps/api/place/details/json?place_id={place_id}&fields=photo,name,formatted_address,geometry,icon,business_status,vicinity,international_phone_number,opening_hours,website&key={Google_API}')
     # &facet=region&facet=states
         google_list = resp_2.json()
         # pprint.pprint(google_list)
