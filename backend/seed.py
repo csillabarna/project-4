@@ -164,10 +164,10 @@ with app.app_context():
     )
     print('Comment created')
 
-    favourite = Favourites(
-        user_id=1,
-        site_id=1
-    )
+    # favourite = Favourites(
+    #     user_id=1,
+    #     site_id=1
+    # )
     print('Favourites created')
 
     print('Adding to database:')
@@ -178,7 +178,7 @@ with app.app_context():
 
     db.session.add(palau)
     db.session.add(comment)
-    db.session.add(favourite)
+    # db.session.add(favourite)
     
     db.session.commit()
     print('Completed!')
