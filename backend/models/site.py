@@ -16,12 +16,15 @@ class Site(db.Model, BaseModel):
     longitude = db.Column(db.Float, nullable=False, unique=False)
     category = db.Column(db.ARRAY(db.String), nullable=True, unique=False)
     thumbnail_id = db.Column(db.String(1000), nullable=True, unique=False)
-    image = db.Column(db.String(1000), nullable=True, unique=False)
+    image = db.Column(db.ARRAY(db.JSON), nullable=True, unique=False)
     weblink = db.Column(db.String(1000), nullable=True, unique=False)
     date_inscribed = db.Column(db.Integer, nullable=False, unique=False)
+    place_id = db.Column(db.String(1000), nullable=True, unique=False)
+    formatted_address = db.Column(db.String(1000), nullable=True, unique=False)
+
 
 # ONE -MANY relationship
-#  if is nullable =false then we need to have for every site a user, we need to add the ONE to  the many side 
+#  if is nullable =false then we need to have for every site a user, we need to add the ONE to  the many side
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
 
-    user = db.relationship('User', backref = 'sites')
+    user = db.relationship('User', backref='sites')

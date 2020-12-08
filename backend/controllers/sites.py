@@ -1,4 +1,5 @@
-from flask import Blueprint, request, g
+import requests
+from flask import Blueprint, request, g, jsonify
 
 from models.site import Site
 from models.comment import Comment
@@ -187,3 +188,14 @@ def remove_favourite(id):
         return {'message': 'Site not found in your favourites'}, 404
     favourite.remove()
     return {'message': f'Favourite {id} has been deleted successfully'}
+
+
+# Proxy request
+
+
+@router.route('/proxy-heritage', methods=['GET'])
+def heritage():
+  resp = requests.get(
+      'https://data.opendatasoft.com/api/records/1.0/search/?dataset=world-heritage-list%40public-us&lang=ES&rows=2000&sort=date_inscribed')
+  heritage_list = resp.json()
+  return jsonify(heritage_list), 200

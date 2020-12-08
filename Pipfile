@@ -12,6 +12,10 @@ marshmallow-sqlalchemy = "*"
 Flask-Bcrypt = "*"
 PyJWT = "*"
 sendgrid = "*"
+googlemaps = "*"
+prettyprint = "*"
+requests = "*"
+email-validator = "*"
 
 [dev-packages]
 

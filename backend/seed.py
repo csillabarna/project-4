@@ -1,10 +1,13 @@
+from flask import jsonify
 
 from app import app, db
+import pprint
 
 from models.site import Site
 from models.user import User
 from models.comment import Comment
 from models.favourites import Favourites
+import requests
 
 with app.app_context():
 
@@ -36,6 +39,87 @@ with app.app_context():
     csilla.save()
     print('User created')
 
+    resp = requests.get(
+        'https://data.opendatasoft.com/api/records/1.0/search/?dataset=world-heritage-list%40public-us&rows=4')
+    # &facet=region&facet=states
+    heritage_list = resp.json()
+    heritage_filtered_records = heritage_list['records']
+
+    result = []
+    for x in heritage_filtered_records:
+        result.append(heritage_filtered_records)
+
+    result_1 = result[0]
+    # pprint.pprint(result_1)
+
+    # from x in result['fields']:
+    #     result_1.append(result)
+
+    # dictionary = list(map(lambda x: x, heritage_filtered_records))
+    # print(type(dictionary))
+    # pprint.pprint(dictionary)
+
+    def mapper(record):
+        return {'region': record['fields']['region'],
+                'name': record['fields']['site'],
+                'latitude': record['fields']['coordinates'][0],
+                'longitude': record['fields']['coordinates'][1],
+                'country': record['fields']['states'],
+                'province': record['fields']['location'],
+                'description': record['fields']['short_description'],
+                'thumbnail_id': record['fields']['image_url']['id'],
+                # image=heritage_filtered_dictionary[''],
+                'weblink': record['fields']['http_url'],
+                'date_inscribed': record['fields']['date_inscribed']
+                # 'user': balta
+
+                }
+    filtered = (list(map(mapper, result_1)))
+    print(type(filtered))
+    # pprint.pprint(filtered)
+
+    def google_id_mapper(record):
+        name = record['name']
+        resp_1 = requests.get(
+            f'https://maps.googleapis.com/maps/api/place/textsearch/json?query={name}&key=AIzaSyDVFJqgir_7vg1YEUKduW6HU7tiin74Zt4')
+    # &facet=region&facet=states
+        google_list = resp_1.json()
+        google_place_id = google_list['results'][0]['place_id']
+        record['place_id'] = google_place_id
+        google_formatted_address = google_list['results'][0]['formatted_address']
+        record['formatted_address'] = google_formatted_address
+        return record
+
+    filtered_with_id = (list(map(google_id_mapper, filtered)))
+    # pprint.pprint(filtered_with_id)
+
+    def google_photo_mapper(record):
+        place_id = record['place_id']
+        pprint.pprint(place_id)
+
+        resp_2 = requests.get(
+            f'https://maps.googleapis.com/maps/api/place/details/json?place_id={place_id}&fields=photo,name,formatted_address,geometry,icon,business_status,vicinity,international_phone_number,opening_hours,website&key=AIzaSyDVFJqgir_7vg1YEUKduW6HU7tiin74Zt4')
+    # &facet=region&facet=states
+        google_list = resp_2.json()
+        # pprint.pprint(google_list)
+
+        google_photo = google_list['result']
+        # google_photo['photos'] ?
+        #     record['image'] =
+        record['image'] = google_photo.get(
+            'photos', 'https://images.unsplash.com/photo-1542931287-023b922fa89b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1534&q=80')
+
+        return record
+
+    # https://maps.googleapis.com/maps/api/place/photo?photoreference=PHOTO_REFERENCE&sensor=false&maxheight=MAX_HEIGHT&maxwidth=MAX_WIDTH&key=YOUR_API_KEY
+
+    filtered_with_photo = (list(map(google_photo_mapper, filtered_with_id)))
+    pprint.pprint(filtered_with_photo)
+
+    sites_to_make = []
+    for site in filtered_with_photo:
+        sites_to_make.append(Site(**site))
+
     alhambra = Site(
         region="Europe and North America",
         name="Alhambra, Generalife and Albayzín, Granada",
@@ -45,7 +129,7 @@ with app.app_context():
         province="Province of Granada, Autonomous Community of Andalusia",
         description="Rising above the modern lower town, the Alhambra and the Albaycín, situated on two adjacent hills, form the medieval part of Granada. To the east of the Alhambra fortress and residence are the magnificent gardens of the Generalife, the former rural residence of the emirs who ruled this part of Spain in the 13th and 14th centuries. The residential district of the Albaycín is a rich repository of Moorish vernacular architecture, into which the traditional Andalusian architecture blends harmoniously.",
         thumbnail_id='9cf243e9fa6b0b572f0a4028e7a8fba7',
-        image='https://upload.wikimedia.org/wikipedia/commons/thumb/d/d8/Alhambradesdegeneralife.jpg/1024px-Alhambradesdegeneralife.jpg',
+        # image='https://upload.wikimedia.org/wikipedia/commons/thumb/d/d8/Alhambradesdegeneralife.jpg/1024px-Alhambradesdegeneralife.jpg',
         weblink='https://whc.unesco.org/en/list/314',
         date_inscribed=1984,
         user=balta
@@ -60,8 +144,9 @@ with app.app_context():
         country="Spain",
         province="Province of Barcelona, Autonomous Community of Catalonia",
         description="These are two of the finest contributions to Barcelona's architecture by the Catalan art nouveau architect Lluís Domènech i Montaner. The Palau de la Música Catalana is an exuberant steel-framed structure full of light and space, and decorated by many of the leading designers of the day. The Hospital de Sant Pau is equally bold in its design and decoration, while at the same time perfectly adapted to the needs of the sick.",
-        thumbnail_id='9cf243e9fa6b0b572f0a4028e7a8fba7',
-        image='https://upload.wikimedia.org/wikipedia/commons/thumb/d/d8/Alhambradesdegeneralife.jpg/1024px-Alhambradesdegeneralife.jpg',
+        thumbnail_id="9cf243e9fa6b0b572f0a4028e7a8fba7",
+        image=[{"height":  4618,  "html_attributions":  ["<a href=\"https://maps.google.com/maps/contrib/103094235694394958518\">Diego Simhan</a>"
+                                                         ],  "photo_reference":"ATtYBwKiXNb9LOlWvnsxgRZylNHs6jU3qirT1hYL2USVxZhrWciFUSs6lPKsrYh4MX0ZuuSJmpAoTxYw7omNAL70RSGIzcWBQD-94eWmDH5edcMOk5ueaNk2kh5sjzluijgkWOdxbVxNhq_50O1zA2Nw8ceD6ngNlrcrpKdOK7jFgci4SNrt",  "width":3464}],
         weblink="https://whc.unesco.org/en/list/804",
         date_inscribed=1997,
         user=csilla
@@ -85,8 +170,11 @@ with app.app_context():
     print('Favourites created')
 
     print('Adding to database:')
-
     db.session.add(alhambra)
+    # pprint.pprint(sites_to_make[0])
+    # print(type(sites_to_make))
+    # db.session.add(sites_to_make)
+
     db.session.add(palau)
     db.session.add(comment)
 
