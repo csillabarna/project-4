@@ -12,6 +12,7 @@ import Home from './components/Home'
 import Create from './components/Create'
 import SingleSite from './components/SingleSite'
 import User from './components/User'
+import Verification from './components/Verification'
 
 
 
@@ -23,6 +24,8 @@ const App = () => (
       <Route exact path="/" component={Home} />
       <Route exact path="/sites" component={Sites} />
       <Route exact path="/sites/:siteId" component={SingleSite} />
+      <Route exact path="/verification/:id" component={Verification} />
+
 
       <Route exact path="/signup" component={Signup} />
       <Route exact path="/login" component={Login} />

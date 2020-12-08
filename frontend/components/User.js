@@ -8,26 +8,17 @@ const User = (props) => {
   console.log(props)
   const userId = props.match.params.userId
   const [user, updateUser] = useState([])
-  // const [comments, updateComments] = useState([])
 
 
   useEffect(() => {
     axios.get(`/api/users/${userId}`)
-      .then(resp => {
-        console.log(resp.data)
-        updateUser(resp.data)
+      .then(res => {
+        console.log(res.data)
+        updateUser(res.data)
       })
   }, [])
 
-  // useEffect(() => {
-  //   axios.get(`/api/users/${userId}/comments`)
-  //     .then(resp => {
-  //       updateComments(resp.data)
-  //     })
-  // }, [])
-
-  // console.log(comments)
-
+  
   if (!user.username) {
     return <div className="section">
       <div className="container">
@@ -39,13 +30,10 @@ const User = (props) => {
     </div>
   }
 
-  // console.log(user.user_avatar)
   return <div className="container is-fluid mt-5">
     <div className="columns">
-      {/* <div className="column">
-      </div> */}
       <div className="column">
-        <figure className="image is-128x128 is-justify-content-center			">
+        <figure className="image is-128x128 is-justify-content-center">
           <img className="" src={user.user_avatar} />
         </figure>
         <div className="container is-fluid has-text-centered mt-5">
@@ -59,11 +47,12 @@ const User = (props) => {
         <div className="tile is-ancestor">
           <div className="tile is-vertical is-parent">
 
+            <h1>my favourite places</h1>
 
             {user.favourites && user.favourites.map((favourite, index) => {
+              
               return <div className="tile is-child box" key={index}>
                 <Link to={`/sites/${favourite.site_id}`} >
-
                   <div className="media">
                     <div className="media-left">
                       <figure className="image is-64x64">

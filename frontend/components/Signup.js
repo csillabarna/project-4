@@ -1,15 +1,22 @@
 import React, { useState } from 'react'
 import axios from 'axios'
+import Modal from 'react-modal'
+import { Link } from 'react-router-dom'
 
 
-const Signup = (props) => {
-
+const Signup = () => {
+  const [closed, updateClosed] = useState(false)
+  function modal() {
+    updateClosed(true)
+  }
   const [formData, updateFormData] = useState({
   
     username: '',
     email: '',
     password: '',
     password_confirmation: ''
+    
+    
   })
 
   function handleChange(event) {
@@ -29,14 +36,22 @@ const Signup = (props) => {
     axios.post('api/signup', formData)
       .then(resp => {
         console.log(resp.data)
-        props.history.push('/login')
       })  
     
   }
-  console.log(formData)
+  // console.log(formData)
 
+ 
+  return <>
+  {/* alert */}
+    <Modal isOpen={closed}>
+      <p>Please check your inbox to confirm your email address </p>
+      <div className="modal-buttons">
+        <Link to={'/'}><button className="button is-black">ok</button></Link>
+      </div>
+    </Modal>
 
-  return <form onSubmit={handleSubmit}>
+  <form onSubmit={handleSubmit}>
     <div>
       <label>Username</label>
       <input
@@ -74,10 +89,10 @@ const Signup = (props) => {
       />
     </div>
     
-    <button>Signup</button>
+    <button onClick={modal}>Signup</button>
 
   </form>
-  
+</>  
 }
 
 export default Signup

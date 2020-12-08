@@ -28,6 +28,14 @@ def index():
     return site_schema.jsonify(sites, many=True), 200
 
 
+#search
+@router.route('/search/<name>', methods=['GET'])
+def search(name):
+    sites = Site.query.all()
+    matches = [site for site in sites if name.lower() in site.country.lower()]
+    return site_schema.jsonify(matches, many=True), 200
+
+
 # get single site
 @router.route('/sites/<int:id>', methods=['GET'])
 def get_single_site(id):
@@ -143,7 +151,7 @@ def remove_comment(comment_id):
     comment.remove()
     return {'message': f'comment {comment_id} has been deleted successfully'}
 
-# Get favourites
+# Get all favourites
 
 
 @router.route('/favourites', methods=['GET'])
@@ -157,37 +165,26 @@ def get_favourites():
 @secure_route
 def add_favourite():
     favourite_dictionary = request.get_json()
-    print(g)
-    # current user id
     favourite_dictionary['user_id'] = g.current_user.id
-    print(favourite_dictionary['site_id'])
-    print(g.current_user)
-    print(request)
     try:
         favourite = favourite_schema.load(favourite_dictionary)
     except ValidationError as e:
         return {'errors': e.messages, 'message': f'{e}Something went wrong.'}
-    print(favourite.site_id)
-    # if not site:
-    #     return {'message': 'Site not found'}, 404
-
-    # if favourite['site_id'] != favourite_dictionary['site_id']:
-    #     return {'message': 'This site is already in your favourites'}, 401
-
     favourite.save()
     return favourite_schema.jsonify(favourite), 200
 
 # Remove Favourites
 
 
-@router.route('/favourites/<int:id>', methods=['DELETE'])
+@router.route('/favourites/<int:site_id>', methods=['DELETE'])
 @secure_route
-def remove_favourite(id):
-    favourite = Favourites.query.get(id)
+def remove_favourite(site_id):
+    user_id = g.current_user.id
+    favourite = Favourites.query.get((user_id, site_id))
     if not favourite:
         return {'message': 'Site not found in your favourites'}, 404
     favourite.remove()
-    return {'message': f'Favourite {id} has been deleted successfully'}
+    return {'message': f'Favourite for user :{user_id}  site id: {site_id } has been deleted successfully'}
 
 
 # Proxy request

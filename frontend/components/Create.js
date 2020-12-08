@@ -34,7 +34,7 @@ const Create = (props) => {
     updateAddFormData(data)
   }
   function handleSubmit(event) {
-    console.log('handleSubmit')
+    // console.log('handleSubmit')
     event.preventDefault()
     const token = localStorage.getItem('token')
     axios.post('/api/sites', addFormData, {

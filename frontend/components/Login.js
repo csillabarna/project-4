@@ -1,5 +1,8 @@
 import React, { useState } from 'react'
 import axios from 'axios'
+import { Link } from 'react-router-dom'
+
+import { getUserId } from '../../../project-3/frontend/lib/auth'
 
 
 const Login = (props) => {
@@ -24,7 +27,6 @@ const Login = (props) => {
 
   function handleSubmit(event) {
     event.preventDefault()
-
     axios.post('api/login', loginData)
       .then(res => {
         console.log(res.data)
@@ -37,31 +39,34 @@ const Login = (props) => {
   console.log(loginData)
 
 
-  return <form onSubmit={handleSubmit}>
+  return <>
+       <form onSubmit={handleSubmit}>
 
-    <div>
-      <label>Email</label>
-      <input
-        type="text"
-        onChange={handleChange}
-        value={loginData.email}
-        name="email"
-      />
-    </div>
-    <div>
-      <label>Password</label>
-      <input
-        type="password"
-        onChange={handleChange}
-        value={loginData.password}
-        name="password"
-      />
-    </div>
+         <div>
+           <label>Email</label>
+           <input
+             type="text"
+             onChange={handleChange}
+             value={loginData.email}
+             name="email"
+           />
+         </div>
+         <div>
+           <label>Password</label>
+           <input
+             type="password"
+             onChange={handleChange}
+             value={loginData.password}
+             name="password"
+           />
+         </div>
 
-    <button>Login</button>
+         <button>Login</button>
 
-  </form>
-
+       </form>
+    <p>not registered yet?</p>
+      <Link to="/signup"><button>Signup</button></Link>
+</>
 }
 
 export default Login
