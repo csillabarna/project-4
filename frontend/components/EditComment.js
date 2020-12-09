@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
+import { useHistory } from 'react-router-dom'
+
 
 const EditComment = (props) => {
   const [comment, updateComment] = useState({})
-
-  const siteId = props.match.params.siteId
+  // go back to previous page without a siteId
+  const history = useHistory()
   const commentId = props.match.params.id
-
   const token = localStorage.getItem('token')
 
   useEffect(() => {
@@ -21,13 +22,13 @@ const EditComment = (props) => {
   }, [])
 
   function handleUpdateComment() {
+
     axios.put(`/api/comments/${comment.id}`, comment, {
       headers: { Authorization: `Bearer ${token}` }
 
     })
       .then(resp => {
-        // console.log(resp.data)
-        props.history.push(`/sites/${siteId}`)
+        (history.goBack())
       })
 
   }

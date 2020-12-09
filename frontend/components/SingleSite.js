@@ -14,11 +14,9 @@ const SingleSite = (props) => {
 
   const siteId = props.match.params.siteId
   const token = localStorage.getItem('token')
-  const commentId = props.match.params.commentId
-  console.log(`commentID is : ${commentId}`)  
-
- 
-  console.log('site ID is: ' + siteId, token)
+  const commentId = props.match.params.id
+  // console.log(`commentID is : ${commentId}`)  
+  // console.log('site ID is: ' + siteId, token)
 
   useEffect(() => {
     axios.get(`/api/sites/${siteId}`)
@@ -27,19 +25,18 @@ const SingleSite = (props) => {
         console.log(data)
         updateSite(data)
       })
-  }, [])
+      .then(
+        axios.get(`/api/favourites/${siteId}`,  {
+          headers: { Authorization: `Bearer ${token}` }
+        })
+          .then(res =>{
+            const data = res.data
+            console.log(data)
+            setFav(data.isFavourite)
+          })
+      )
+  }, [fav,content])
 
-  useEffect(() => {
-    axios.get(`/api/favourites/${siteId}`,  {
-      headers: { Authorization: `Bearer ${token}` }
-    })
-      .then(res =>{
-        const data = res.data
-        console.log(data)
-        setFav(data.isFavourite)
-      })
-        
-  }, [])
 
 
 
@@ -51,10 +48,13 @@ const SingleSite = (props) => {
       .then(res => {
         updateContent('')
         updateSite(res.data)
+        props.history.push(`/sites/${siteId}`)
+
       })
 
   }
-  function handleFav() {
+
+  function addWish() {
     axios.post('/api/favourites', { 'site_id': siteId  }, {
       headers: { Authorization: `Bearer ${token}` }
     })
@@ -96,7 +96,7 @@ const SingleSite = (props) => {
           <div className="columns is-centered m-1 is-mobile"><Map site={site} /></div>
           <br />
         </div>
-        {fav ?  <p>💗</p> : <button className="heart" onClick={handleFav}> 
+        {fav ?  <p>💗</p> : <button className="heart" onClick={addWish}> 
           Add to Wishlist ❤️
         </button>
         }
