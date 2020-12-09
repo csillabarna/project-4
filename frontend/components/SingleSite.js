@@ -3,13 +3,21 @@ import axios from 'axios'
 import { Link } from 'react-router-dom'
 import { isCreator } from '../lib/auth'
 import Map from './Map'
+import ImageGallery from 'react-image-gallery'
 
+// # SCSS
+import '../../node_modules/react-image-gallery/styles/scss/image-gallery.scss'
+// import '~react-image-gallery/styles/scss/image-gallery.scss'
 
+// # CSS
+import '../../node_modules/react-image-gallery/styles/css/image-gallery.css'
+
+// import '~react-image-gallery/styles/css/image-gallery.css'
 
 const SingleSite = (props) => {
   const [site, updateSite] = useState({})
   const [content, updateContent] = useState('')
-
+  // const [images, handleImages] = useState({})
   const siteId = props.match.params.siteId
   const token = localStorage.getItem('token')
   const commentId = props.match.params.commentId
@@ -52,6 +60,37 @@ const SingleSite = (props) => {
       })
     
   }
+  const images = [
+    {
+      original: 'https://picsum.photos/id/1018/1000/600/',
+      thumbnail: 'https://picsum.photos/id/1018/250/150/'
+    },
+    {
+      original: 'https://picsum.photos/id/1015/1000/600/',
+      thumbnail: 'https://picsum.photos/id/1015/250/150/'
+    },
+    {
+      original: 'https://picsum.photos/id/1019/1000/600/',
+      thumbnail: 'https://picsum.photos/id/1019/250/150/'
+    }
+  ]
+  function handleImages(img) {
+    img.map((photo, index) => {
+      console.log(photo.photo_reference)
+      const sitesImages = {
+        original: `https://maps.googleapis.com/maps/api/place/photo?photoreference=${photo.photo_reference}&sensor=false&maxwidth=700&key=${process.env.Google_API}`,
+        thumbnail: `https://maps.googleapis.com/maps/api/place/photo?photoreference=${photo.photo_reference}&sensor=false&maxwidth=400&key=${process.env.Google_API}`
+      }
+
+      console.log(sitesImages)
+      images.push(sitesImages)
+      console.log(images)
+      return images
+
+    })
+    console.log(images)
+    return images
+  }
 
   if (!site.latitude) {
     return <div className="section">
@@ -65,6 +104,9 @@ const SingleSite = (props) => {
   return <div>
     <div className="section">
       <div className="container">
+        {site.image && <ImageGallery items={handleImages(site.image)
+        } />}
+
         <img src={site.image} alt={site.name} />
         <h1 className="title">{site.name}</h1>
         <h2 className="subtitle">{site.province}</h2>

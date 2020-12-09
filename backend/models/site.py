@@ -7,20 +7,20 @@ class Site(db.Model, BaseModel):
 
     __tablename__ = 'sites'
 
-    name = db.Column(db.String(140), nullable=False, unique=True)
-    description = db.Column(db.String(1000), nullable=False, unique=False)
-    province = db.Column(db.String(200), nullable=False, unique=False)
-    region = db.Column(db.String(200), nullable=False, unique=False)
-    country = db.Column(db.String(200), nullable=False, unique=False)
+    name = db.Column(db.Text, nullable=False, unique=True)
+    description = db.Column(db.Text, nullable=False, unique=False)
+    province = db.Column(db.Text, nullable=True, unique=False)
+    region = db.Column(db.Text, nullable=False, unique=False)
+    country = db.Column(db.Text, nullable=False, unique=False)
     latitude = db.Column(db.Float, nullable=False, unique=False)
     longitude = db.Column(db.Float, nullable=False, unique=False)
     category = db.Column(db.ARRAY(db.String), nullable=True, unique=False)
-    thumbnail_id = db.Column(db.String(1000), nullable=True, unique=False)
+    thumbnail_id = db.Column(db.Text, nullable=True, unique=False)
     image = db.Column(db.ARRAY(db.JSON), nullable=True, unique=False)
-    weblink = db.Column(db.String(1000), nullable=True, unique=False)
+    weblink = db.Column(db.Text, nullable=True, unique=False)
     date_inscribed = db.Column(db.Integer, nullable=False, unique=False)
-    place_id = db.Column(db.String(1000), nullable=True, unique=False)
-    formatted_address = db.Column(db.String(1000), nullable=True, unique=False)
+    place_id = db.Column(db.Text, nullable=True, unique=False)
+    formatted_address = db.Column(db.Text, nullable=True, unique=False)
 
 
 # ONE -MANY relationship

@@ -75,57 +75,113 @@ const Signup = () => {
       </div>
     </Modal>
 
-    <form onSubmit={handleSubmit}>
-      <div>
-        <label>Username</label>
-        <input
-          type="text"
-          onChange={handleChange}
-          value={formData.username}
-          name="username"
-        />
-        {errors.username && <p className="help" style={{ color: 'red' }}>
-          {'There was a problem with your Username'}
-        </p>}
+    <form onSubmit={handleSubmit} className='m-5 mx-6'>
+      <div className="field">
+        <label className="label">Username</label>
+        <div className="control">
+          <input
+            type="text"
+            onChange={handleChange}
+            value={formData.username}
+            name="username"
+            className="input"
+
+          />
+          {errors.username && <p className="help" style={{ color: 'red' }}>
+            {'There was a problem with your Username'}
+          </p>}
+        </div>
+        <p className="help">Please choose a unique username</p>
+
       </div>
-      <div>
-        <label>Email</label>
-        <input
-          type="text"
-          onChange={handleChange}
-          value={formData.email}
-          name="email"
-        />
-        {errors.email && <p className="help" style={{ color: 'red' }}>
-          {'There was a problem with your Email'}
-        </p>}
-      </div>
-      <div>
-        <label>Password</label>
-        <input
-          type="password"
-          onChange={handleChange}
-          value={formData.password}
-          name="password"
-        />
-        {errors.password && <p className="help" style={{ color: 'red' }}>
-          {'There was a problem with your Password'}
-        </p>}
-      </div>
-      <div>
-        <label>Confirm your password</label>
-        <input
-          type="password"
-          onChange={handleChange}
-          value={formData.password_confirmation}
-          name="password_confirmation"
-        />
-        {errors.passwordConfirmation && <p className="help" style={{ color: 'red' }}>
-          {'Does not match password'}
-        </p>}
+      <div className="field">
+        <label className="label">Email</label>
+        <div className="control">
+          <input
+            type="text"
+            onChange={handleChange}
+            value={formData.email}
+            name="email"
+            className="input"
+          />
+
+          {errors.email && <p className="help" style={{ color: 'red' }}>
+            {'There was a problem with your Email'}
+          </p>}
+        </div >
+        <p className="help">e.g. example@example.com</p>
+
       </div>
 
-      <button>Signup</button>
+
+      <div className="field">
+        <label className="label">Bio</label>
+        <div className="control">
+          <textarea
+            placeholder="Describe yourself.."
+            type="text"
+            onChange={handleChange}
+            value={formData.user_bio}
+            name="user_bio"
+            className="textarea"
+          />
+        </div>
+        <p className="help">Tell us a bit about yourself</p>
+      </div>
+      <div className="field">
+        <label className="label">City</label>
+        <div className="control">
+          <input
+            type="text"
+            onChange={handleChange}
+            value={formData.user_city}
+            name="user_city"
+            className="input"
+          />
+          {errors.city && <p className="help" style={{ color: 'red' }}>
+            {'There was a problem with your City'}
+          </p>}
+        </div>
+        <p className="help">Let us know which city you are based in</p>
+      </div>
+      <div className="field">
+        <label className="label">Password</label>
+        <div className="control">
+          <input
+            type="password"
+            onChange={handleChange}
+            value={formData.password}
+            name="password"
+            className="input"
+          />
+
+          {errors.password && <p className="help" style={{ color: 'red' }}>
+            {'There was a problem with your Password'}
+          </p>}
+        </div>
+        <p className="help">Create a password</p>
+
+      </div>
+      <div className="field">
+        <label className="label">Confirm your password</label>
+        <div className="control">
+          <input
+            type="password"
+            onChange={handleChange}
+            value={formData.password_confirmation}
+            name="password_confirmation"
+            className="input"
+          />
+          {errors.passwordConfirmation && <p className="help" style={{ color: 'red' }}>
+            {'Does not match password'}
+          </p>}
+        </div>
+        <p className="help">Please make sure your passwords match</p>
+
+      </div>
+
+      <button className='button mb-3'>Signup</button>
+
       {/* // onClick={modal} */}
 
 

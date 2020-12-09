@@ -1,3 +1,5 @@
+
+
 .heart{
   outline: none;
   border:none;
@@ -7,7 +9,7 @@
   text-align: end;
 }
 
-$hexagon-width: 250px;
+$hexagon-width: 100px;
 $hexagon-height: $hexagon-width*.55;
 $hexagon-margin: 5px;
 $hexagon-title-color: #fff;
@@ -21,7 +23,7 @@ $viewport-thereshold: $hexagon-width + $hexagon-margin;
 
 body {
   font-family: 'Montserrat', sans-serif;
-  background: #3ea0eb;
+  // background: #3ea0eb;
 }
 
 *, *::before, *::after {

@@ -13,14 +13,15 @@ const Sites = () => {
   // function add(){
   //   return setFav(true) 
   // }
-
   const [sites, updateSites] = useState([])
+  // console.log(process.env.Google_API)
 
   useEffect(() => {
     if (search){
       axios.get(`api/search/${search}`)
         .then(res => {
           updateSites(res.data)
+
         })
     } else {
       axios.get('api/sites')
@@ -34,6 +35,7 @@ const Sites = () => {
 
 
   return <>
+
   <div className="columns">
     <div className="field has-addons column">
       <div className="control">
@@ -64,7 +66,7 @@ const Sites = () => {
             <div className="card-content">
               <div className="card-image">
                 <figure className="image is-3by3">
-                  <img src={site.image} alt={site.name} />
+                  <img src={`https://maps.googleapis.com/maps/api/place/photo?photoreference=${site.image[0].photo_reference}&sensor=false&maxwidth=500&key=${process.env.Google_API}`} alt={site.name} />
                 </figure>
               </div>
               <div className="media">

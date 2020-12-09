@@ -40,31 +40,40 @@ const Login = (props) => {
 
 
   return <>
-       <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className='m-5 mx-6'>
 
-         <div>
-           <label>Email</label>
-           <input
-             type="text"
-             onChange={handleChange}
-             value={loginData.email}
-             name="email"
-           />
-         </div>
-         <div>
-           <label>Password</label>
-           <input
-             type="password"
-             onChange={handleChange}
-             value={loginData.password}
-             name="password"
-           />
-         </div>
+      <div className="field">
+        <label className="label">Email</label>
+        <div className="control">
+          <input
+            type="text"
+            onChange={handleChange}
+            value={loginData.email}
+            name="email"
+            className="input"
 
-         <button>Login</button>
+          />
+        </div>
+        <p className="help">e.g. example@example.com</p>
+      </div>
+      <div className="field">
+        <label className="label">Password</label>
+        <div className="control">
+          <input
+            type="password"
+            onChange={handleChange}
+            value={loginData.password}
+            name="password"
+            className="input"
+          />
+        </div>
 
-       </form>
-    </>
+      </div>
+
+      <button className='button mb-3'>Login</button>
+
+    </form>
+  </>
 }
 
 export default Login
