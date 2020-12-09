@@ -12,6 +12,9 @@ const SingleSite = (props) => {
 
   const siteId = props.match.params.siteId
   const token = localStorage.getItem('token')
+  const commentId = props.match.params.commentId
+  console.log(`commentID is : ${commentId}`)  
+
  
   console.log('site ID is: ' + siteId, token)
 
@@ -25,15 +28,7 @@ const SingleSite = (props) => {
   }, [])
 
 
-  function handleDelete() {
-    axios.delete(`/api/sites/${siteId}`, {
-      headers: { Authorization: `Bearer ${token}` }
-    })
-      .then(() => {
-        props.history.push('/sites')
-      })
-  }
-  // comments section
+
   function handleComment() {
     axios.post(`/api/sites/${siteId}/comments`, { content }, {
       headers: { Authorization: `Bearer ${token}` }
@@ -53,7 +48,7 @@ const SingleSite = (props) => {
       
       .then(res => {
         updateSite(res.data)
-        // props.history.push(`/sites/${siteId}`)
+        props.history.push(`/sites/${siteId}`)
       })
     
   }
@@ -75,12 +70,6 @@ const SingleSite = (props) => {
         <h2 className="subtitle">{site.province}</h2>
         <h2 className="subtitle">{site.country}</h2>
         <h2 className="subtitle">{site.description}</h2>
-        {token && isCreator(site.user ? site.user.id : '') && <button className="button is-dark" onClick={handleDelete}>
-          Remove site
-        </button>}
-        {token && isCreator(site.user ? site.user.id : '') && <Link className="button is-primary" to={`/sites/edit-site/${site.id}`}>
-          Edit site
-        </Link>}
         <div>
           <br />
 
@@ -93,7 +82,8 @@ const SingleSite = (props) => {
         {/* this will prevent breaking when loading checks is any comments */}
         {site.comments && site.comments.map(comment => {
           // console.log(comment)
-          return <article key={comment.id} className="media">
+          return <article
+            key={comment.id} className="media">
             <figure className="media-right">
               <p className="image is-64x64">
                 <img src="https://bulma.io/images/placeholders/128x128.png" />
@@ -132,8 +122,8 @@ const SingleSite = (props) => {
                   Delete
               </button>
             </div>}
-
-            {isCreator(comment.user.id) && <Link className="button is-small" to={`/comments/${comment.id}`}>
+            {console.log(`comment.id is : ${comment.id}`)}
+            {isCreator(comment.user.id) && <Link className="button is-small" to={`/comment/${comment.id}`}>
               Edit 🖊️
             </Link>}
 
@@ -142,7 +132,7 @@ const SingleSite = (props) => {
 
 
         {/*post comments */}
-        <article className="media">
+        {localStorage.getItem('token') && <article className="media">
           <div className="media-content">
             <div className="field">
               <p className="control">
@@ -165,7 +155,7 @@ const SingleSite = (props) => {
               </p>
             </div>
           </div>
-        </article>
+        </article>}
       </div>
 
     </div>

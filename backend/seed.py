@@ -43,17 +43,17 @@ with app.app_context():
     csilla.save()
     print('User created')
 
-    resp = requests.get(
-        'https://data.opendatasoft.com/api/records/1.0/search/?dataset=world-heritage-list%40public-us&rows=4')
-    # &facet=region&facet=states
-    heritage_list = resp.json()
-    heritage_filtered_records = heritage_list['records']
+    # resp = requests.get(
+    #     'https://data.opendatasoft.com/api/records/1.0/search/?dataset=world-heritage-list%40public-us&rows=4')
+    # # &facet=region&facet=states
+    # heritage_list = resp.json()
+    # heritage_filtered_records = heritage_list['records']
 
-    result = []
-    for x in heritage_filtered_records:
-        result.append(heritage_filtered_records)
+    # result = []
+    # for x in heritage_filtered_records:
+    #     result.append(heritage_filtered_records)
 
-    result_1 = result[0]
+    # result_1 = result[0]
     # pprint.pprint(result_1)
 
     # from x in result['fields']:
@@ -137,7 +137,7 @@ with app.app_context():
         province="Province of Granada, Autonomous Community of Andalusia",
         description="Rising above the modern lower town, the Alhambra and the Albaycín, situated on two adjacent hills, form the medieval part of Granada. To the east of the Alhambra fortress and residence are the magnificent gardens of the Generalife, the former rural residence of the emirs who ruled this part of Spain in the 13th and 14th centuries. The residential district of the Albaycín is a rich repository of Moorish vernacular architecture, into which the traditional Andalusian architecture blends harmoniously.",
         thumbnail_id='9cf243e9fa6b0b572f0a4028e7a8fba7',
-        # image='https://upload.wikimedia.org/wikipedia/commons/thumb/d/d8/Alhambradesdegeneralife.jpg/1024px-Alhambradesdegeneralife.jpg',
+        image='https://upload.wikimedia.org/wikipedia/commons/thumb/d/d8/Alhambradesdegeneralife.jpg/1024px-Alhambradesdegeneralife.jpg',
         weblink='https://whc.unesco.org/en/list/314',
         date_inscribed=1984,
         user=balta
@@ -153,8 +153,10 @@ with app.app_context():
         province="Province of Barcelona, Autonomous Community of Catalonia",
         description="These are two of the finest contributions to Barcelona's architecture by the Catalan art nouveau architect Lluís Domènech i Montaner. The Palau de la Música Catalana is an exuberant steel-framed structure full of light and space, and decorated by many of the leading designers of the day. The Hospital de Sant Pau is equally bold in its design and decoration, while at the same time perfectly adapted to the needs of the sick.",
         thumbnail_id="9cf243e9fa6b0b572f0a4028e7a8fba7",
-        image=[{"height":  4618,  "html_attributions":  ["<a href=\"https://maps.google.com/maps/contrib/103094235694394958518\">Diego Simhan</a>"
-                                                         ],  "photo_reference":"ATtYBwKiXNb9LOlWvnsxgRZylNHs6jU3qirT1hYL2USVxZhrWciFUSs6lPKsrYh4MX0ZuuSJmpAoTxYw7omNAL70RSGIzcWBQD-94eWmDH5edcMOk5ueaNk2kh5sjzluijgkWOdxbVxNhq_50O1zA2Nw8ceD6ngNlrcrpKdOK7jFgci4SNrt",  "width":3464}],
+        image='https://upload.wikimedia.org/wikipedia/commons/thumb/d/d8/Alhambradesdegeneralife.jpg/1024px-Alhambradesdegeneralife.jpg',
+
+        # image=[{"height":  4618,  "html_attributions":  ["<a href=\"https://maps.google.com/maps/contrib/103094235694394958518\">Diego Simhan</a>"
+        #                                                  ],  "photo_reference":"ATtYBwKiXNb9LOlWvnsxgRZylNHs6jU3qirT1hYL2USVxZhrWciFUSs6lPKsrYh4MX0ZuuSJmpAoTxYw7omNAL70RSGIzcWBQD-94eWmDH5edcMOk5ueaNk2kh5sjzluijgkWOdxbVxNhq_50O1zA2Nw8ceD6ngNlrcrpKdOK7jFgci4SNrt",  "width":3464}],
         weblink="https://whc.unesco.org/en/list/804",
         date_inscribed=1997,
         user=csilla
@@ -175,7 +177,11 @@ with app.app_context():
     #     user_id=1,
     #     site_id=1
     # )
+<<<<<<< HEAD
+    # print('Favourites created')
+=======
     print('Favourites created')
+>>>>>>> 3d8883e016d79afb9150f35924ac513b36431445
 
     print('Adding to database:')
     db.session.add(alhambra)

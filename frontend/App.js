@@ -9,10 +9,11 @@ import Navbar from './components/Navbar'
 import Signup from './components/Signup'
 import Login from './components/Login'
 import Home from './components/Home'
-import Create from './components/Create'
 import SingleSite from './components/SingleSite'
 import User from './components/User'
 import Verification from './components/Verification'
+import EditUser from './components/EditUser'
+import EditComment from './components/EditComment'
 
 
 
@@ -25,13 +26,15 @@ const App = () => (
       <Route exact path="/sites" component={Sites} />
       <Route exact path="/sites/:siteId" component={SingleSite} />
       <Route exact path="/verification/:id" component={Verification} />
+      <Route exact path="/comment/:id" component={EditComment} />
+
 
 
       <Route exact path="/signup" component={Signup} />
       <Route exact path="/login" component={Login} />
 
-      <Route exact path="/sites/add-site" component={Create} />
       <Route exact path='/user/:userId' component={User} />
+      <Route exact path='/user/:userId/edit' component={EditUser} />
 
 
 

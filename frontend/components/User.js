@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
+import { isCreator } from '../lib/auth'
+const token = localStorage.getItem('token')
+
+
 // import Rater from 'react-rater'
 
 const User = (props) => {
@@ -8,6 +12,9 @@ const User = (props) => {
   console.log(props)
   const userId = props.match.params.userId
   const [user, updateUser] = useState([])
+
+  const token = localStorage.getItem('token')
+
 
 
   useEffect(() => {
@@ -41,6 +48,9 @@ const User = (props) => {
           <h2 className="subtitle is-3">Location: {user.user_city}</h2>
           <h2 className="subtitle is-3">A bit about yourself:</h2>
           <p>{user.user_bio}</p>
+          {token && <Link className="button is-primary" to={`/user/${user.id}/edit`}>
+          Edit Profile
+          </Link>}
         </div>
       </div>
       <div className="column is-one-third">

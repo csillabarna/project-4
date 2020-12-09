@@ -9,17 +9,23 @@ const Signup = () => {
   // function modal() {
   // }
   const [formData, updateFormData] = useState({
-
     username: '',
     email: '',
+    user_bio: '',
+    user_avatar: '',
+    user_city: '',
     password: '',
     password_confirmation: ''
-
-
   })
+
+
+
   const [errors, updateErrors] = useState({
     username: '',
     email: '',
+    user_bio: '',
+    user_avatar: '',
+    user_city: '',
     password: '',
     password_confirmation: ''
   })
