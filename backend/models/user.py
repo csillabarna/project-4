@@ -22,7 +22,7 @@ class User(db.Model, BaseModel):
 
     #email verification flag
     is_confirmed = db.Column(db.Boolean, unique=False, default=False)
-
+    
     @hybrid_property
     def password(self):
         pass

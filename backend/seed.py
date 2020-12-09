@@ -1,4 +1,5 @@
 from flask import jsonify
+from environment.config import Google_API
 
 from app import app, db
 import pprint
@@ -7,7 +8,10 @@ from models.site import Site
 from models.user import User
 from models.comment import Comment
 from models.favourites import Favourites
+from serializers.site_serializer import SiteSchema
+
 import requests
+site_schema = SiteSchema()
 
 with app.app_context():
 
@@ -59,66 +63,66 @@ with app.app_context():
     # print(type(dictionary))
     # pprint.pprint(dictionary)
 
-    # def mapper(record):
-    #     return {'region': record['fields']['region'],
-    #             'name': record['fields']['site'],
-    #             'latitude': record['fields']['coordinates'][0],
-    #             'longitude': record['fields']['coordinates'][1],
-    #             'country': record['fields']['states'],
-    #             'province': record['fields']['location'],
-    #             'description': record['fields']['short_description'],
-    #             'thumbnail_id': record['fields']['image_url']['id'],
-    #             # image=heritage_filtered_dictionary[''],
-    #             'weblink': record['fields']['http_url'],
-    #             'date_inscribed': record['fields']['date_inscribed']
-    #             # 'user': balta
+    def mapper(record):
+        return {'region': record['fields']['region'],
+                'name': record['fields']['site'],
+                'latitude': record['fields']['coordinates'][0],
+                'longitude': record['fields']['coordinates'][1],
+                'country': record['fields']['states'],
+                'province': record['fields']['location'],
+                'description': record['fields']['short_description'],
+                'thumbnail_id': record['fields']['image_url']['id'],
+                # image=heritage_filtered_dictionary[''],
+                'weblink': record['fields']['http_url'],
+                'date_inscribed': record['fields']['date_inscribed']
+                # 'user': balta
 
-    #             }
-    # filtered = (list(map(mapper, result_1)))
-    # print(type(filtered))
-    # # pprint.pprint(filtered)
+                }
+    filtered = (list(map(mapper, result_1)))
+    print(type(filtered))
+    # pprint.pprint(filtered)
 
-    # def google_id_mapper(record):
-    #     name = record['name']
-    #     resp_1 = requests.get(
-    #         f'https://maps.googleapis.com/maps/api/place/textsearch/json?query={name}&key=AIzaSyDVFJqgir_7vg1YEUKduW6HU7tiin74Zt4')
-    # # &facet=region&facet=states
-    #     google_list = resp_1.json()
-    #     google_place_id = google_list['results'][0]['place_id']
-    #     record['place_id'] = google_place_id
-    #     google_formatted_address = google_list['results'][0]['formatted_address']
-    #     record['formatted_address'] = google_formatted_address
-    #     return record
+    def google_id_mapper(record):
+        name = record['name']
+        resp_1 = requests.get(
+            f'https://maps.googleapis.com/maps/api/place/textsearch/json?query={name}&key={Google_API}')
+    # &facet=region&facet=states
+        google_list = resp_1.json()
+        google_place_id = google_list['results'][0]['place_id']
+        record['place_id'] = google_place_id
+        google_formatted_address = google_list['results'][0]['formatted_address']
+        record['formatted_address'] = google_formatted_address
+        return record
 
-    # filtered_with_id = (list(map(google_id_mapper, filtered)))
-    # # pprint.pprint(filtered_with_id)
+    filtered_with_id = (list(map(google_id_mapper, filtered)))
+    # pprint.pprint(filtered_with_id)
 
-    # def google_photo_mapper(record):
-    #     place_id = record['place_id']
-    #     pprint.pprint(place_id)
+    def google_photo_mapper(record):
+        place_id = record['place_id']
+        pprint.pprint(place_id)
 
-    #     resp_2 = requests.get(
-    #         f'https://maps.googleapis.com/maps/api/place/details/json?place_id={place_id}&fields=photo,name,formatted_address,geometry,icon,business_status,vicinity,international_phone_number,opening_hours,website&key=AIzaSyDVFJqgir_7vg1YEUKduW6HU7tiin74Zt4')
-    # # &facet=region&facet=states
-    #     google_list = resp_2.json()
-    #     # pprint.pprint(google_list)
+        resp_2 = requests.get(
+            f'https://maps.googleapis.com/maps/api/place/details/json?place_id={place_id}&fields=photo,name,formatted_address,geometry,icon,business_status,vicinity,international_phone_number,opening_hours,website&key={Google_API}')
+    # &facet=region&facet=states
+        google_list = resp_2.json()
+        # pprint.pprint(google_list)
 
-    #     google_photo = google_list['result']
-    #     # google_photo['photos'] ?
-    #     #     record['image'] =
-    #     record['image'] = google_photo.get(
-    #         'photos', 'https://images.unsplash.com/photo-1542931287-023b922fa89b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1534&q=80')
+        google_photo = google_list['result']
+        # google_photo['photos'] ?
+        #     record['image'] =
+        record['image'] = google_photo.get(
+            'photos', 'https://images.unsplash.com/photo-1542931287-023b922fa89b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1534&q=80')
 
-    #     return record
+        return record
 
-    # # https://maps.googleapis.com/maps/api/place/photo?photoreference=PHOTO_REFERENCE&sensor=false&maxheight=MAX_HEIGHT&maxwidth=MAX_WIDTH&key=YOUR_API_KEY
+    # https://maps.googleapis.com/maps/api/place/photo?photoreference=PHOTO_REFERENCE&sensor=false&maxheight=MAX_HEIGHT&maxwidth=MAX_WIDTH&key=YOUR_API_KEY
 
-    # filtered_with_photo = (list(map(google_photo_mapper, filtered_with_id)))
-    # pprint.pprint(filtered_with_photo)
+    filtered_with_photo = (list(map(google_photo_mapper, filtered_with_id)))
+    pprint.pprint(filtered_with_photo)
 
-    # sites_to_make = []
-    # for site in filtered_with_photo:
-    #     sites_to_make.append(Site(**site))
+    sites_to_make = []
+    for site in filtered_with_photo:
+        sites_to_make.append(Site(**site))
 
     alhambra = Site(
         region="Europe and North America",
@@ -169,13 +173,17 @@ with app.app_context():
     #     user_id=1,
     #     site_id=1
     # )
+<<<<<<< HEAD
     # print('Favourites created')
+=======
+    print('Favourites created')
+>>>>>>> 3d8883e016d79afb9150f35924ac513b36431445
 
     print('Adding to database:')
     db.session.add(alhambra)
-    # pprint.pprint(sites_to_make[0])
+    # pprint.pprint(site_schema.load(sites_to_make))
     # print(type(sites_to_make))
-    # db.session.add(sites_to_make)
+    # db.session.add(site_schema.load(sites_to_make))
 
     db.session.add(palau)
     db.session.add(comment)
