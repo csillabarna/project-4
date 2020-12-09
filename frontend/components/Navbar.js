@@ -11,6 +11,7 @@ const Navbar = (props) => {
 
   function handleLogout() {
     localStorage.removeItem('token')
+
     props.history.push('/sites')
   }
   currentUserId !== true && useEffect(() => {
@@ -48,8 +49,7 @@ const Navbar = (props) => {
               <div className="mr-3"> <p> Welcome back <Link className="is-capitalized" to={`/user/${currentUserId}`}>
                 <strong className="is-link"> {user.username} </strong></Link></p></div>
             }
-            {localStorage.getItem('token')
-              && <Link className="button is-light" to="/sites/add-site">Add Site</Link>}
+            
             {localStorage.getItem('token') && <button
               className="button is-light"
               onClick={handleLogout}

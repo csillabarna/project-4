@@ -5,9 +5,7 @@ const EditComment = (props) => {
   const [comment, updateComment] = useState({})
 
   const siteId = props.match.params.siteId
-  const commentId = props.match.params.commentId
-  console.log(`comment.id :${comment.id}
-                commentId is :${commentId}`)
+  const commentId = props.match.params.id
 
   const token = localStorage.getItem('token')
 
@@ -17,10 +15,10 @@ const EditComment = (props) => {
     })
       .then(resp => {
         const data = resp.data
-        // console.log(data)
+        console.log(data)
         updateComment(data)
       })
-  }, [comment])
+  }, [])
 
   function handleUpdateComment() {
     axios.put(`/api/comments/${comment.id}`, comment, {
@@ -55,9 +53,9 @@ const EditComment = (props) => {
           <textarea
             className="textarea"
             onChange={handleChange}
-            value={comment.text}
-            name='text'>
-            {comment.text}
+            value={comment.content}
+            name='content'>
+            {comment.content}
           </textarea>
         </p>
       </div>

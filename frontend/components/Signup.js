@@ -9,14 +9,17 @@ const Signup = () => {
   // function modal() {
   // }
   const [formData, updateFormData] = useState({
-
     username: '',
     email: '',
+    user_bio: '',
+    user_avatar: '',
+    user_city: '',
     password: '',
     password_confirmation: ''
-
-
   })
+
+
+
   const [errors, updateErrors] = useState({
     username: '',
     email: '',
@@ -60,13 +63,9 @@ const Signup = () => {
       })
 
   }
-<<<<<<< HEAD
- 
-=======
   // console.log(formData)
 
 
->>>>>>> 3d8883e016d79afb9150f35924ac513b36431445
   return <>
     {/* alert */}
     <Modal isOpen={closed}>
