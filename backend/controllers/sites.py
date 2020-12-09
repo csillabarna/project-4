@@ -169,6 +169,17 @@ def get_favourites():
     favourites = Favourites.query.all()
     return favourite_schema.jsonify(favourites, many=True), 200
 
+#check if it is favourite?
+@router.route('/favourites/<int:site_id>', methods=['GET'])
+@secure_route
+def check_favourite(site_id):
+    user_id = g.current_user.id
+    favourite = Favourites.query.get((user_id, site_id))
+    if favourite:
+        return {'isFavourite': True}, 200
+    else:
+        return {'isFavourite': False}, 200
+
 
 # Add Favourites
 @router.route('/favourites', methods=['POST'])

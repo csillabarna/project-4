@@ -140,7 +140,6 @@ def get_single_site(id):
     user = User.query.get(id)
     if not user:
         return {'message': 'User not found'}, 404
-    print(populated_user_schema.jsonify)
 
     return populated_user_schema.jsonify(user), 200
 

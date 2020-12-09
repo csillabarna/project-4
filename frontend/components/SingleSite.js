@@ -9,6 +9,8 @@ import Map from './Map'
 const SingleSite = (props) => {
   const [site, updateSite] = useState({})
   const [content, updateContent] = useState('')
+  const [fav, setFav] = useState(false)
+ 
 
   const siteId = props.match.params.siteId
   const token = localStorage.getItem('token')
@@ -27,6 +29,18 @@ const SingleSite = (props) => {
       })
   }, [])
 
+  useEffect(() => {
+    axios.get(`/api/favourites/${siteId}`,  {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+      .then(res =>{
+        const data = res.data
+        console.log(data)
+        setFav(data.isFavourite)
+      })
+        
+  }, [])
+
 
 
   function handleComment() {
@@ -39,6 +53,12 @@ const SingleSite = (props) => {
         updateSite(res.data)
       })
 
+  }
+  function handleFav() {
+    axios.post('/api/favourites', { 'site_id': siteId  }, {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+    
   }
 
   function handleDeleteComment(commentId) {
@@ -76,6 +96,11 @@ const SingleSite = (props) => {
           <div className="columns is-centered m-1 is-mobile"><Map site={site} /></div>
           <br />
         </div>
+        {fav ?  <p>💗</p> : <button className="heart" onClick={handleFav}> 
+          Add to Wishlist ❤️
+        </button>
+        }
+        
 
         {/*show comments */}
 

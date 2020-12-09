@@ -9,10 +9,7 @@ import MapGL, { Marker } from 'react-map-gl'
 const Sites = () => {
   const [search, updateSearch] = useState('')
   const [searched, updateSearched] = useState('')
-  // const [fav, setFav] = useState(false)
-  // function add(){
-  //   return setFav(true) 
-  // }
+  
 
   const [sites, updateSites] = useState([])
 
@@ -32,14 +29,6 @@ const Sites = () => {
 
   }, [searched])
 
-  useEffect(() => {
-   
-    axios.get('api/favourites')
-      .then(res => {
-        updateSites(res.data)
-      })
-        
-  }, [])
 
   return <>
   <div className="columns">
