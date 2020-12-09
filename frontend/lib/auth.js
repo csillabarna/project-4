@@ -9,6 +9,7 @@ export function getUserId() {
   return parsedToken.sub
 }
 
+
 export function isCreator(compareId) {
   if (!compareId) return false
   return getUserId() === compareId

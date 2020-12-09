@@ -7,6 +7,7 @@ import os
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
 from marshmallow import ValidationError
+from email_validator import validate_email, EmailNotValidError
 
 
 
@@ -21,28 +22,37 @@ router = Blueprint(__name__, 'users')
 def signup():
     request_body = request.get_json()
     user = user_schema.load(request_body)
+    email = user.email
+    try:
+      valid = validate_email(email)
+      email = valid.email
+      # user verification by email 
+      def send(user):
+        base_URL = 'http://localhost:8001'
+        message = Mail(from_email = "whprojectapp2020@gmail.com",
+          to_emails = user.email,
+          subject = "Email verificaton from WH",
+          html_content = f'<a href="{base_URL}/verification/{user.id}">Please verify your email address</a>'
+          )
+        try:
+          sg = SendGridAPIClient(os.environ['SENDGRID_API_KEY'])
+          response = sg.send(message)
+          print(response.status_code)
+          print(response.body)
+          print(response.headers)
+        except Exception as e:
+          print(str(e), message)
+    except EmailNotValidError as e:
+      print(str(e))
+      return str(e)
     user.save()
     send(user)
+
     return user_schema.jsonify(user), 200
 
 
 
-# user verification by email 
-def send(user):
-  base_URL = 'http://localhost:8001'
-  message = Mail(from_email = "whprojectapp2020@gmail.com",
-    to_emails = user.email,
-    subject = "Email verificaton from WH",
-    html_content = f'<a href="{base_URL}/verification/{user.id}">Please verify your email address</a>'
-    )
-  try:
-    sg = SendGridAPIClient(os.environ['SENDGRID_API_KEY'])
-    response = sg.send(message)
-    print(response.status_code)
-    print(response.body)
-    print(response.headers)
-  except Exception as e:
-    print(e.message)
+
  
 #verify user
 @router.route('/verification/<int:id>',methods=['PUT'])

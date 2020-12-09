@@ -8,7 +8,10 @@ from models.site import Site
 from models.user import User
 from models.comment import Comment
 from models.favourites import Favourites
+from serializers.site_serializer import SiteSchema
+
 import requests
+site_schema = SiteSchema()
 
 with app.app_context():
 
@@ -172,9 +175,9 @@ with app.app_context():
 
     print('Adding to database:')
     db.session.add(alhambra)
-    # pprint.pprint(sites_to_make[0])
+    # pprint.pprint(site_schema.load(sites_to_make))
     # print(type(sites_to_make))
-    # db.session.add(sites_to_make)
+    # db.session.add(site_schema.load(sites_to_make))
 
     db.session.add(palau)
     db.session.add(comment)
