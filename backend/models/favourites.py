@@ -12,11 +12,9 @@ class Favourites(db.Model):
         'users.id'),  primary_key=True)
     site_id = db.Column(db.Integer, db.ForeignKey(
         'sites.id'),  primary_key=True)
-    # unique=True it shouldn't be unique it means is unique in the table so
-    # I cant add it if you have it in your fav
-
-    # user = db.relationship('User', backref='favourites')
-    # site = db.relationship('Site', backref='favourites')
+   
+    user = db.relationship('User', backref='favourites')
+    site = db.relationship('Site', backref='favourites')
 
     def save(self):
         db.session.add(self)

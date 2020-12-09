@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom'
 import { isCreator } from '../lib/auth'
 import Map from './Map'
 import ImageGallery from 'react-image-gallery'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faHeart } from '@fortawesome/free-solid-svg-icons'
 
 // # SCSS
 import '../../node_modules/react-image-gallery/styles/scss/image-gallery.scss'
@@ -17,30 +19,38 @@ import '../../node_modules/react-image-gallery/styles/css/image-gallery.css'
 const SingleSite = (props) => {
   const [site, updateSite] = useState({})
   const [content, updateContent] = useState('')
-  // const [images, handleImages] = useState({})
+  const [fav, setFav] = useState(false)
+
+
   const siteId = props.match.params.siteId
   const token = localStorage.getItem('token')
-  const commentId = props.match.params.commentId
-  console.log(`commentID is : ${commentId}`)  
 
- 
-  console.log('site ID is: ' + siteId, token)
 
   useEffect(() => {
     axios.get(`/api/sites/${siteId}`)
       .then(res => {
         const data = res.data
-        console.log(data)
+        console.log(`data from useEffect site/site id${data}`)
         updateSite(data)
       })
+      .then(
+        axios.get(`/api/favourites/${siteId}`, {
+          headers: { Authorization: `Bearer ${token}` }
+        })
+          .then(res => {
+            const data = res.data
+            console.log(`data from useEffect fav/site id get  is fav ${data}`)
+            setFav(data.isFavourite)
+          })
+      )
   }, [])
 
 
 
+  //------------- comments -----------
   function handleComment() {
     axios.post(`/api/sites/${siteId}/comments`, { content }, {
       headers: { Authorization: `Bearer ${token}` }
-
     })
       .then(res => {
         updateContent('')
@@ -53,27 +63,24 @@ const SingleSite = (props) => {
     axios.delete(`/api/comments/${commentId}`, {
       headers: { Authorization: `Bearer ${token}` }
     })
-      
       .then(res => {
         updateSite(res.data)
-        props.history.push(`/sites/${siteId}`)
       })
-    
+
   }
-  const images = [
-    {
-      original: 'https://picsum.photos/id/1018/1000/600/',
-      thumbnail: 'https://picsum.photos/id/1018/250/150/'
-    },
-    {
-      original: 'https://picsum.photos/id/1015/1000/600/',
-      thumbnail: 'https://picsum.photos/id/1015/250/150/'
-    },
-    {
-      original: 'https://picsum.photos/id/1019/1000/600/',
-      thumbnail: 'https://picsum.photos/id/1019/250/150/'
-    }
-  ]
+
+  //------------- wish list -----------
+
+  function addWish() {
+    axios.post('/api/favourites', { 'site_id': siteId }, {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+      .then(
+        setFav(true)
+      )
+
+  }
+  const images = []
   function handleImages(img) {
     img.map((photo, index) => {
       console.log(photo.photo_reference)
@@ -91,6 +98,15 @@ const SingleSite = (props) => {
     console.log(images)
     return images
   }
+  function deleteFromWish() {
+    axios.delete(`/api/favourites/${site.id}`, {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+      .then(
+        setFav(false)
+      )
+  }
+
 
   if (!site.latitude) {
     return <div className="section">
@@ -109,51 +125,47 @@ const SingleSite = (props) => {
 
         <img src={site.image} alt={site.name} />
         <h1 className="title">{site.name}</h1>
-        <h2 className="subtitle">{site.province}</h2>
         <h2 className="subtitle">{site.country}</h2>
         <h2 className="subtitle">{site.description}</h2>
+        <h2 className="subtitle">{site.region} region</h2>
+
+        <h2 className="subtitle"> This site inscribed on UNESCO’s World Heritage List in : {site.date_inscribed}</h2>
+        {/* <h2 className="subtitle">get more info {site.weblink} </h2> */}
+
         <div>
           <br />
 
           <div className="columns is-centered m-1 is-mobile"><Map site={site} /></div>
           <br />
         </div>
+        {fav ? <button className="button" onClick={deleteFromWish}>delete from Wishlist </button>
+          : <button className="button" onClick={addWish}><span><FontAwesomeIcon color="green" icon={faHeart} /></span>
+          </button>
+        }
+        {/* <button className="heart" onClick={add}> */}
+        {/*  */}
+        {/* </button> */}
 
         {/*show comments */}
 
         {/* this will prevent breaking when loading checks is any comments */}
         {site.comments && site.comments.map(comment => {
-          // console.log(comment)
           return <article
             key={comment.id} className="media">
             <figure className="media-right">
               <p className="image is-64x64">
-                <img src="https://bulma.io/images/placeholders/128x128.png" />
+                <img src={comment.user.user_avatar} />
               </p>
             </figure>
             <div className="media-content">
               <div className="content">
                 <p className="subtitle">
                   <strong> {comment.user.username} </strong>
-                  {/* <small  className="media-left"> { comment.createdAt} </small>  */}
+                  <small className="media-right"> posted:  {comment.created_at} </small>
                   <br />
                   {comment.content} </p>
               </div>
 
-              {/* fontawsome icons ??? */}
-              {/* <nav className="level is-mobile">
-                <div className="level-left">
-                  <a className="level-item">
-                    <span className="icon is-small"><i className="fas fa-reply"></i></span>
-                  </a>
-                  <a className="level-item">
-                    <span className="icon is-small"><i className="fas fa-retweet"></i></span>
-                  </a>
-                  <a className="level-item">
-                    <span className="icon is-small"><i className="fas fa-heart"></i></span>
-                  </a>
-                </div>
-              </nav> */}
 
 
             </div>
@@ -161,7 +173,7 @@ const SingleSite = (props) => {
               <button
                 className="delete"
                 onClick={() => handleDeleteComment(comment.id)}>
-                  Delete
+                Delete
               </button>
             </div>}
             {console.log(`comment.id is : ${comment.id}`)}

@@ -25,6 +25,7 @@ const User = (props) => {
       })
   }, [])
 
+
   
   if (!user.username) {
     return <div className="section">
@@ -45,7 +46,7 @@ const User = (props) => {
         </figure>
         <div className="container is-fluid has-text-centered mt-5">
           <h1 className="title is-1 is-capitalized">{user.username}</h1>
-          <h2 className="subtitle is-3">Location: {user.user_city}</h2>
+          <h2 className="subtitle is-3">{user.user_city}</h2>
           <h2 className="subtitle is-3">A bit about yourself:</h2>
           <p>{user.user_bio}</p>
           {token && <Link className="button is-primary" to={`/user/${user.id}/edit`}>

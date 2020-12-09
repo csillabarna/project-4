@@ -50,7 +50,7 @@ const Signup = () => {
   function handleSubmit(event) {
     event.preventDefault()
 
-    axios.post('api/signup', formData)
+    ('api/signup', formData)
       .then(resp => {
         if (resp.data.errors) {
           updateErrors(resp.data.errors)

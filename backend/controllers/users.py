@@ -13,7 +13,7 @@ from email_validator import validate_email, EmailNotValidError
 
 user_schema = UserSchema()
 populated_user_schema = PopulatedUserSchema()
-
+print(populated_user_schema)
 router = Blueprint(__name__, 'users')
 
 
@@ -136,14 +136,8 @@ def get_users():
 
 # get single user + Favourites
 @router.route('/users/<int:id>', methods=['GET'])
-# if is on secure route will break to frontend
-# @secure_route
 def get_single_site(id):
     user = User.query.get(id)
-    # user_id = User.query.get(id).id
-    # current_user_id = g.current_user.id
-    # if user_id != current_user_id:
-    #     return {'message': 'Unauthorized'}, 401
     if not user:
         return {'message': 'User not found'}, 404
 
