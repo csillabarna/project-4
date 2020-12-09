@@ -9,7 +9,7 @@
 
 $hexagon-width: 250px;
 $hexagon-height: $hexagon-width*.55;
-$hexagon-margin: 25px;
+$hexagon-margin: 5px;
 $hexagon-title-color: #fff;
 $hexagon-border-color: #fff;
 $hexagon-border-color--hover: #72f88e;
@@ -92,7 +92,7 @@ body {
 
     &::before {
       background: $hexagon-border-color;
-      transform: scale(1.055);
+      transform: scale(1.020);
     }
 
     &::after {

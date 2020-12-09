@@ -74,8 +74,8 @@ with app.app_context():
                 'thumbnail_id': record['fields']['image_url']['id'],
                 # image=heritage_filtered_dictionary[''],
                 'weblink': record['fields']['http_url'],
-                'date_inscribed': record['fields']['date_inscribed']
-                # 'user': balta
+                'date_inscribed': record['fields']['date_inscribed'],
+                'user': balta
 
                 }
     filtered = (list(map(mapper, result_1)))
@@ -87,12 +87,16 @@ with app.app_context():
         resp_1 = requests.get(
             f'https://maps.googleapis.com/maps/api/place/textsearch/json?query={name}&key={Google_API}')
     # &facet=region&facet=states
-        google_list = resp_1.json()
-        google_place_id = google_list['results'][0]['place_id']
-        record['place_id'] = google_place_id
-        google_formatted_address = google_list['results'][0]['formatted_address']
-        record['formatted_address'] = google_formatted_address
-        return record
+        google_dict = resp_1.json()
+        # print(type(google_list), google_list)
+        if not google_dict['results']:
+            return record
+        else:
+            google_place_id = google_dict['results'][0]['place_id']
+            record['place_id'] = google_place_id
+            google_formatted_address = google_dict['results'][0]['formatted_address']
+            record['formatted_address'] = google_formatted_address
+            return record
 
     filtered_with_id = (list(map(google_id_mapper, filtered)))
     # pprint.pprint(filtered_with_id)
@@ -177,7 +181,7 @@ with app.app_context():
     db.session.add(alhambra)
     # pprint.pprint(site_schema.load(sites_to_make))
     # print(type(sites_to_make))
-    # db.session.add(site_schema.load(sites_to_make))
+    db.session.add_all(sites_to_make)
 
     db.session.add(palau)
     db.session.add(comment)
