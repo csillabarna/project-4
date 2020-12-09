@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHeart } from '@fortawesome/free-solid-svg-icons'
 import MapGL, { Marker } from 'react-map-gl'
 
 
@@ -78,9 +76,7 @@ const Sites = () => {
             </div>
           </div>
         </Link>
-        {/* <button className="heart" onClick={add}> */}
-        {/* <span><FontAwesomeIcon color="green" icon={faHeart} /></span> */}
-        {/* </button> */}
+       
       </div>
     })}
   </div>

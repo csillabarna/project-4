@@ -3,6 +3,8 @@ import axios from 'axios'
 import { Link } from 'react-router-dom'
 import { isCreator } from '../lib/auth'
 import Map from './Map'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faHeart } from '@fortawesome/free-solid-svg-icons'
 
 
 
@@ -96,26 +98,31 @@ const SingleSite = (props) => {
       <div className="container">
         <img src={site.image} alt={site.name} />
         <h1 className="title">{site.name}</h1>
-        <h2 className="subtitle">{site.province}</h2>
         <h2 className="subtitle">{site.country}</h2>
         <h2 className="subtitle">{site.description}</h2>
+        <h2 className="subtitle">{site.region} region</h2>
+
+        <h2 className="subtitle"> This site inscribed on UNESCO’s World Heritage List in : {site.date_inscribed}</h2>
+        {/* <h2 className="subtitle">get more info {site.weblink} </h2> */}
+
         <div>
           <br />
 
           <div className="columns is-centered m-1 is-mobile"><Map site={site} /></div>
           <br />
         </div>
-        {fav ?  <button className="heart" onClick={deleteFromWish}>delete from Wishlist </button>
-          : <button className="heart" onClick={addWish}>Add to Wishlist ❤️
+        {fav ?  <button className="button" onClick={deleteFromWish}>delete from Wishlist </button>
+          : <button className="button" onClick={addWish}><span><FontAwesomeIcon color="green" icon={faHeart} /></span>
           </button>
         }
-        
+        {/* <button className="heart" onClick={add}> */}
+        {/*  */}
+        {/* </button> */}
 
         {/*show comments */}
 
         {/* this will prevent breaking when loading checks is any comments */}
         {site.comments && site.comments.map(comment => {
-          // console.log(comment)
           return <article
             key={comment.id} className="media">
             <figure className="media-right">
