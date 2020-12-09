@@ -43,25 +43,15 @@ with app.app_context():
     csilla.save()
     print('User created')
 
-    # resp = requests.get(
-    #     'https://data.opendatasoft.com/api/records/1.0/search/?dataset=world-heritage-list%40public-us&rows=4')
-    # # &facet=region&facet=states
-    # heritage_list = resp.json()
-    # heritage_filtered_records = heritage_list['records']
-
-    # result = []
-    # for x in heritage_filtered_records:
-    #     result.append(heritage_filtered_records)
-
-    # result_1 = result[0]
-    # pprint.pprint(result_1)
-
-    # from x in result['fields']:
-    #     result_1.append(result)
-
-    # dictionary = list(map(lambda x: x, heritage_filtered_records))
-    # print(type(dictionary))
-    # pprint.pprint(dictionary)
+    resp = requests.get(
+        'https://data.opendatasoft.com/api/records/1.0/search/?dataset=world-heritage-list%40public-us&rows=4')
+    # &facet=region&facet=states
+    heritage_list = resp.json()
+    heritage_filtered_records = heritage_list['records']
+    result = []
+    for x in heritage_filtered_records:
+        result.append(heritage_filtered_records)
+    result_1 = result[0]
 
     def mapper(record):
         return {'region': record['fields']['region'],
@@ -177,11 +167,8 @@ with app.app_context():
     #     user_id=1,
     #     site_id=1
     # )
-<<<<<<< HEAD
     # print('Favourites created')
-=======
-    print('Favourites created')
->>>>>>> 3d8883e016d79afb9150f35924ac513b36431445
+    # print('Favourites created')
 
     print('Adding to database:')
     db.session.add(alhambra)
@@ -192,6 +179,6 @@ with app.app_context():
     db.session.add(palau)
     db.session.add(comment)
     # db.session.add(favourite)
-    
+
     db.session.commit()
     print('Completed!')
