@@ -33,7 +33,7 @@ const Sites = () => {
     <div className="field has-addons column">
       <div className="control">
         <input className="input is-family-code search"
-          placeholder="Search"
+          placeholder="search for country"
           onChange={(event) => updateSearch(event.target.value)}
           value={search} />
       </div>
