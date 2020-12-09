@@ -52,7 +52,7 @@ def get_single_site(id):
 @secure_route
 def create():
     site_dictionary = request.get_json()
-    # current user id
+    # current user id is
     site_dictionary['user_id'] = g.current_user.id
     print(site_dictionary)
     try:
@@ -64,13 +64,10 @@ def create():
     return site_schema.jsonify(site), 200
 
 # edit site
-
-
 @router.route('/sites/<int:id>', methods=['PUT'])
 @secure_route
 def edit_site(id):
     existing_site = Site.query.get(id)
-
     try:
         site = site_schema.load(
             request.get_json(),
@@ -83,19 +80,14 @@ def edit_site(id):
     # added object level prem, means check who wants to edit the site
     if site.user != g.current_user:
         return {'message': 'Unauthorized'}, 401
-
     site.save()
-
     return site_schema.jsonify(site), 201
 
 # delete site
-
-
 @router.route('/sites/<int:id>', methods=['DELETE'])
 @secure_route
 def remove(id):
     site = Site.query.get(id)
-
     site.remove()
     return {'message': f'site {id} has been deleted successfully'}
 
@@ -104,52 +96,22 @@ def remove(id):
 @router.route('/sites/<int:site_id>/comments', methods=['POST'])
 @secure_route
 def comment_create(site_id):
-
     comment_data = request.get_json()
     comment_data['user_id'] = g.current_user.id
-
     site = Site.query.get(site_id)
-
     comment = comment_schema.load(comment_data)
     comment.site = site
     comment.save()
-    return comment_schema.jsonify(comment)
-
-#  Edit a comment
-
-
-@router.route('/comments/<int:comment_id>', methods=['PUT'])
-@secure_route
-def edit_comment(comment_id):
-    existing_comment = Comment.query.get(comment_id)
-
-    try:
-        comment = comment_schema.load(
-            request.get_json(),
-            instance=existing_comment,
-            partial=True
-        )
-    except ValidationError as e:
-        return {'errors': e.messages, 'message': 'Something went wrong.'}
-
-    # added object level prem, means check who wants to edit the site
-    if comment.user != g.current_user:
-        return {'message': 'Unauthorized'}, 401
-
-    comment.save()
-
-    return comment_schema.jsonify(comment), 201
+    return populated_site.jsonify(site)
 
 # Delete a comment
-
-
 @router.route('/comments/<int:comment_id>', methods=['DELETE'])
 @secure_route
 def remove_comment(comment_id):
     comment = Comment.query.get(comment_id)
-
+    site = Site.query.get(comment.site_id)
     comment.remove()
-    return {'message': f'comment {comment_id} has been deleted successfully'}
+    return populated_site.jsonify(site)
 
 #get single comment
 @router.route('/comments/<int:comment_id>', methods=['GET'])
@@ -162,6 +124,24 @@ def get_single_comment(comment_id):
 
     return comment_schema.jsonify(comment), 200
 
+#  Edit a comment
+@router.route('/comments/<int:comment_id>', methods=['PUT'])
+@secure_route
+def edit_comment(comment_id):
+    existing_comment = Comment.query.get(comment_id)
+    try:
+        comment = comment_schema.load(
+            request.get_json(),
+            instance=existing_comment,
+            partial=True
+        )
+    except ValidationError as e:
+        return {'errors': e.messages, 'message': 'Something went wrong.'}
+    # added object level prem, means check who wants to edit the site
+    if comment.user != g.current_user:
+        return {'message': 'Unauthorized'}, 401
+    comment.save()
+    return comment_schema.jsonify(comment), 201
 
 # Get all favourites
 @router.route('/favourites', methods=['GET'])
@@ -205,7 +185,9 @@ def remove_favourite(site_id):
     if not favourite:
         return {'message': 'Site not found in your favourites'}, 404
     favourite.remove()
-    return {'message': f'Favourite for user :{user_id}  site id: {site_id } has been deleted successfully'}
+    site = Site.query.get(site_id)
+    return populated_site.jsonify(site)
+
 
 
 # Proxy request

@@ -25,6 +25,7 @@ const User = (props) => {
       })
   }, [])
 
+
   
   if (!user.username) {
     return <div className="section">

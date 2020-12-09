@@ -22,7 +22,7 @@ const SingleSite = (props) => {
     axios.get(`/api/sites/${siteId}`)
       .then(res => {
         const data = res.data
-        console.log(data)
+        console.log(`data from useEffect site/site id${data}`)
         updateSite(data)
       })
       .then(
@@ -31,47 +31,56 @@ const SingleSite = (props) => {
         })
           .then(res =>{
             const data = res.data
-            console.log(data)
+            console.log(`data from useEffect fav/site id get  is fav ${data}`)
             setFav(data.isFavourite)
           })
       )
-  }, [fav,content])
+  }, [])
 
 
 
-
+  //------------- comments -----------
   function handleComment() {
     axios.post(`/api/sites/${siteId}/comments`, { content }, {
       headers: { Authorization: `Bearer ${token}` }
-
     })
       .then(res => {
         updateContent('')
         updateSite(res.data)
-        props.history.push(`/sites/${siteId}`)
-
       })
 
-  }
-
-  function addWish() {
-    axios.post('/api/favourites', { 'site_id': siteId  }, {
-      headers: { Authorization: `Bearer ${token}` }
-    })
-    
   }
 
   function handleDeleteComment(commentId) {
     axios.delete(`/api/comments/${commentId}`, {
       headers: { Authorization: `Bearer ${token}` }
     })
-      
       .then(res => {
         updateSite(res.data)
-        props.history.push(`/sites/${siteId}`)
       })
+
+  }
+
+  //------------- wish list -----------
+
+  function addWish() {
+    axios.post('/api/favourites', { 'site_id': siteId  }, {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+      .then(
+        setFav(true)
+      )
     
   }
+  function deleteFromWish() {
+    axios.delete(`/api/favourites/${site.id}`, {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+      .then(
+        setFav(false)
+      )
+  }
+
 
   if (!site.latitude) {
     return <div className="section">
@@ -96,9 +105,9 @@ const SingleSite = (props) => {
           <div className="columns is-centered m-1 is-mobile"><Map site={site} /></div>
           <br />
         </div>
-        {fav ?  <p>💗</p> : <button className="heart" onClick={addWish}> 
-          Add to Wishlist ❤️
-        </button>
+        {fav ?  <button className="heart" onClick={deleteFromWish}>delete from Wishlist </button>
+          : <button className="heart" onClick={addWish}>Add to Wishlist ❤️
+          </button>
         }
         
 
