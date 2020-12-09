@@ -32,6 +32,14 @@ const Sites = () => {
 
   }, [searched])
 
+  useEffect(() => {
+   
+    axios.get('api/favourites')
+      .then(res => {
+        updateSites(res.data)
+      })
+        
+  }, [])
 
   return <>
   <div className="columns">
@@ -81,9 +89,9 @@ const Sites = () => {
             </div>
           </div>
         </Link>
-        {/* <button className="heart" onClick={add}>
-          <span><FontAwesomeIcon color="green" icon={faHeart} /></span>
-        </button> */}
+        {/* <button className="heart" onClick={add}> */}
+        {/* <span><FontAwesomeIcon color="green" icon={faHeart} /></span> */}
+        {/* </button> */}
       </div>
     })}
   </div>
