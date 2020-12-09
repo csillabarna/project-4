@@ -16,9 +16,7 @@ const SingleSite = (props) => {
 
   const siteId = props.match.params.siteId
   const token = localStorage.getItem('token')
-  const commentId = props.match.params.id
-  // console.log(`commentID is : ${commentId}`)  
-  // console.log('site ID is: ' + siteId, token)
+
 
   useEffect(() => {
     axios.get(`/api/sites/${siteId}`)
@@ -127,14 +125,14 @@ const SingleSite = (props) => {
             key={comment.id} className="media">
             <figure className="media-right">
               <p className="image is-64x64">
-                <img src="https://bulma.io/images/placeholders/128x128.png" />
+                <img src={comment.user.user_avatar} />
               </p>
             </figure>
             <div className="media-content">
               <div className="content">
                 <p className="subtitle">
                   <strong> {comment.user.username} </strong>
-                  {/* <small  className="media-left"> { comment.createdAt} </small>  */}
+                  <small  className="media-right"> posted:  { comment.created_at} </small> 
                   <br />
                   {comment.content} </p>
               </div>
