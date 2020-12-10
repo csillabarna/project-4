@@ -22,7 +22,7 @@ const Navbar = (props) => {
         // console.log(data)
         updateUser(data)
       })
-  }, [])
+  }, [props.match])
 
   return <nav className="navbar is-link" role='navigation' aria-label="main navigation">
     <div className="navbar-brand">
