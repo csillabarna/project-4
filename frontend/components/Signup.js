@@ -70,7 +70,7 @@ const Signup = () => {
     {/* alert */}
     <Modal isOpen={closed}>
       <p>Please check your inbox to confirm your email address </p>
-      <div className="modal-buttons">
+      <div className="modal-card">
         <Link to={'/'}><button className="button is-black">ok</button></Link>
       </div>
     </Modal>
@@ -179,12 +179,7 @@ const Signup = () => {
         <p className="help">Please make sure your passwords match</p>
 
       </div>
-
-      <button className='button mb-3'>Signup</button>
-
-      {/* // onClick={modal} */}
-
-
+      <button className='button mb-3 is-link'>Signup</button>
     </form>
   </>
 }

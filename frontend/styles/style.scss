@@ -15,10 +15,10 @@ $beige-lighter: #e0ece4;
 
 // Update Bulma's global variables
 $family-sans-serif: "Nunito", sans-serif;
-$grey-dark: $pink-theme;
+$grey-dark: $green-theme;
 $grey-light: $beige-light;
 $primary: $crudo;
-$secondary: $green-theme;
+$secondary: $pink-theme;
 $link: $dark-green;
 $widescreen-enabled: false;
 $fullhd-enabled: false;
@@ -41,9 +41,6 @@ $navbar-breakpoint: 400px;
   
 }
 
-// .navbar-menu {
-//   background-color: turquoise;
-// }
 
 $hexagon-width: 100px;
 $hexagon-height: $hexagon-width*.55;

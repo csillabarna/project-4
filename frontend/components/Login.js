@@ -70,7 +70,7 @@ const Login = (props) => {
 
       </div>
 
-      <button className='button mb-3'>Login</button>
+      <button className='button mb-3 is-link'>Login</button>
 
     </form>
   </>

@@ -134,16 +134,19 @@ const SingleSite = (props) => {
           <div className="column is-two-fifths">
             <nav className="columns ">
               <div className="column is-10">
-                <h1 className="title">{site.name}</h1>
+                <h1 className="title is-link">{site.name}</h1>
                 {/* <h2 className="subtitle">{site.region} region</h2> */}
 
                 <h2 className="subtitle">{site.country}</h2>
                 <h2 className="content"> Inscribed on UNESCO’s World Heritage List in {site.date_inscribed}</h2>
               </div>
               <div className="column is-1">
-                {fav ? <button className="button level-item" onClick={deleteFromWish}>                <FontAwesomeIcon icon={faHeart} color='#ea97ad' />
+                {fav ? <button className="button level-item" onClick={deleteFromWish}>
+                  <FontAwesomeIcon icon={faHeart} color='#ea97ad' />
                 </button>
-                  : <button className="button" onClick={addWish}><span><FontAwesomeIcon color="green-theme" icon={faHeart} /></span>
+                  : <button className="button" onClick={addWish}><span>
+                    <FontAwesomeIcon color="#4e8d7c" icon={faHeart} />
+                  </span>
                   </button>
                 }
               </div>
@@ -159,23 +162,15 @@ const SingleSite = (props) => {
 
       <div className="columns">
         <div className="column is-12">
-                <h2 className="subtitle">{site.description}</h2>
+          <h2 className="subtitle">{site.description}</h2>
 
         </div>
       </div>
-      {/* <img src={site.image} alt={site.name} /> */}
-
-
-      {/* <h2 className="subtitle">get more info {site.weblink} </h2> */}
-
+     
       <div>
         <br />
 
-
-        {/* <button className="heart" onClick={add}> */}
-        {/*  */}
-        {/* </button> */}
-
+      
         {/*show comments */}
 
         {/* this will prevent breaking when loading checks is any comments */}

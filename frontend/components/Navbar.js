@@ -29,7 +29,7 @@ const Navbar = (props) => {
         <div className="navbar-item">
           <div className="buttons">
             <Link className="button is-light" to="/">Home</Link>
-            <Link className="button is-light" to="/sites">List of Sites</Link>
+            <Link className="button is-grey-dark" to="/sites">List of Sites</Link>
           </div>
 
         </div>
@@ -42,12 +42,12 @@ const Navbar = (props) => {
 
             {!localStorage.getItem('token') && <Link className="button is-light" to="/signup">Sign up</Link>}
             {!localStorage.getItem('token') &&
-              <Link className="button is-black" to="/login">Login</Link>}
+              <Link className="button is-grey-dark" to="/login">Login</Link>}
 
 
             {localStorage.getItem('token') &&
               <div className="mr-3"> <p> Welcome back <Link className="is-capitalized" to={`/user/${currentUserId}`}>
-                <strong className="is-link"> {user.username} </strong></Link></p></div>
+                <strong className="is-grey-dark"> {user.username} </strong></Link></p></div>
             }
 
             {localStorage.getItem('token') && <button

@@ -42,7 +42,7 @@ const Sites = () => {
             value={search} />
         </div>
         <div className="control">
-          <button className="button is-family-code is-dark"
+          <button className="button is-family-code is-link"
             onClick={() => {
               updateSearched(search)
             }}>

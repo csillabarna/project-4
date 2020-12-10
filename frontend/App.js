@@ -2,7 +2,6 @@ import React, { useEffect } from 'react'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 
 import './styles/style.scss'
-import 'bulma'
 
 import Sites from './components/Sites'
 import Navbar from './components/Navbar'
