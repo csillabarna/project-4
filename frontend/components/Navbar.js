@@ -21,7 +21,7 @@ const Navbar = (props) => {
         console.log(data)
         updateUser(data)
       })
-  }, []) 
+  }, [])
 
   return <nav className="navbar is-link">
     <div className="navbar-menu is-active">
@@ -39,17 +39,17 @@ const Navbar = (props) => {
       <div className="navbar-end">
         <div className="navbar-item">
           <div className="buttons">
-         
+
             {!localStorage.getItem('token') && <Link className="button is-light" to="/signup">Sign up</Link>}
             {!localStorage.getItem('token') &&
               <Link className="button is-black" to="/login">Login</Link>}
 
-            
+
             {localStorage.getItem('token') &&
               <div className="mr-3"> <p> Welcome back <Link className="is-capitalized" to={`/user/${currentUserId}`}>
                 <strong className="is-link"> {user.username} </strong></Link></p></div>
             }
-            
+
             {localStorage.getItem('token') && <button
               className="button is-light"
               onClick={handleLogout}
