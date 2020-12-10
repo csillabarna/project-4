@@ -26,7 +26,8 @@ const Navbar = (props) => {
 
   return <nav className="navbar is-link" role='navigation' aria-label="main navigation">
     <div className="navbar-brand">
-      <img className="image is-64x64" src="https://res.cloudinary.com/greenupload/image/upload/v1607631126/logo_gva9qr.jpg" alt="logo" />
+      <Link to="/">
+        <img className="image is-64x64" src="https://res.cloudinary.com/greenupload/image/upload/v1607631126/logo_gva9qr.jpg" alt="logo" /></Link>
       <a role="button" className={`navbar-burger burger ${isActive ? 'is-active' : ''}`} aria-label="menu" aria-expanded="false" data-target="navbarinfo" onClick={() => setisActive(!isActive)}>
         <span aria-hidden="true"></span>
         <span aria-hidden="true"></span>
