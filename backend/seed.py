@@ -44,7 +44,7 @@ with app.app_context():
     print('User created')
 
     resp = requests.get(
-        'https://data.opendatasoft.com/api/records/1.0/search/?dataset=world-heritage-list%40public-us&rows=20')
+        'https://data.opendatasoft.com/api/records/1.0/search/?dataset=world-heritage-list%40public-us&rows=30')
     # &facet=region&facet=states
     heritage_list = resp.json()
     heritage_filtered_records = heritage_list['records']
