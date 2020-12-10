@@ -53,7 +53,7 @@ const Sites = () => {
     </div>
 
     <div className="columns is-multiline is-mobile">
-      {sites.slice(1, 10).map((site, index) => {
+      {sites.slice(0, 20).map((site, index) => {
         return <div
           className="column is-one-third-desktop is-half-tablet is-half-mobile"
           key={index}
@@ -63,7 +63,8 @@ const Sites = () => {
               <div className="card-content">
                 <div className="card-image">
                   <figure className="image is-3by3">
-                    <img src={`https://maps.googleapis.com/maps/api/place/photo?photoreference=${site.image[0].photo_reference}&sensor=false&maxwidth=500&key=${process.env.Google_API}`} alt={site.name} />
+                    <img src={site.image[0].photo_reference ?
+                      `https://maps.googleapis.com/maps/api/place/photo?photoreference=${site.image[0].photo_reference}&sensor=false&maxwidth=500&key=${process.env.Google_API}` : site.image[0]} alt={site.name}  />
                   </figure>
                 </div>
                 <div className="media">
