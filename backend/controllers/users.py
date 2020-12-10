@@ -28,7 +28,7 @@ def signup():
       email = valid.email
       # user verification by email 
       def send(user):
-        base_URL = 'http://localhost:8001'
+        base_URL = 'https://know-your-heritage.herokuapp.com'
         message = Mail(from_email = "whprojectapp2020@gmail.com",
           to_emails = user.email,
           subject = "Email verificaton from WH",

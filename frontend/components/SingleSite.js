@@ -144,7 +144,7 @@ const SingleSite = (props) => {
                 {localStorage.getItem('token') && fav ? <button className="button level-item" onClick={deleteFromWish}>
                   <FontAwesomeIcon icon={faHeart} color='#ea97ad' />
                 </button>
-                  : <button className="button" onClick={addWish}><span>
+                  : localStorage.getItem('token') && <button className="button" onClick={addWish}><span>
                     <FontAwesomeIcon color="#4e8d7c" icon={faHeart} />
                   </span>
                   </button>
