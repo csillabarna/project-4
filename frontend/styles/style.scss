@@ -1,28 +1,48 @@
 @charset "utf-8";
 // Set your brand colors
 $crudo: #f3f2da;
-$green-theme: #4e8d7c;
-$dark-green: #045762;
-$pink-theme: #ea97ad;
+$themegreen: #4e8d7c;
+$darkgreen: #045762;
+$themepink: #ea97ad;
 
-$purple: #66bfbf;
-$pink: #fa7c91;
-$brown: #727070;
-$green: #056674;
-$beige-light: #e0ece4;
-$beige-lighter: #e0ece4;
 
+// Set your brand colors
+$purple:#ea97ad;
+$pink:  #045762;
+$brown: #4e8d7c;
+$beige-light: #D0D1CD;
+$beige-lighter: #f3f2da;
 
 // Update Bulma's global variables
 $family-sans-serif: "Nunito", sans-serif;
-$grey-dark: $green-theme;
+$grey-dark: $brown;
 $grey-light: $beige-light;
-$primary: $crudo;
-$secondary: $pink-theme;
-$link: $dark-green;
+$primary: $purple;
+$link: $pink;
 $widescreen-enabled: false;
 $fullhd-enabled: false;
-$navbar-breakpoint: 400px;
+#stronguser {
+  color: $purple;
+}
+// $purple: #66bfbf;
+// $pink: #fa7c91;
+// $brown: #727070;
+// $green: #056674;
+// $beige-light: #e0ece4;
+// $beige-lighter: #e0ece4;
+
+// // .is-secon
+// // Update Bulma's global variables
+// $family-sans-serif: "Nunito", sans-serif;
+// $grey-dark: $themegreen;
+// $grey-light: $themepink;
+// $primary: $crudo;
+// $secondary: $themegreen;
+// $info: $themepink;
+// $link: $darkgreen;
+// $widescreen-enabled: false;
+// $fullhd-enabled: false;
+$navbar-breakpoint: 700px;
 // $desktop: 500px;
 
 .heart{
@@ -33,20 +53,18 @@ $navbar-breakpoint: 400px;
   width: 100%;
   text-align: end;
 }
-.navbar {
-  background-color: $dark-green;
-}
-.homepage {
-    min-width: 500px;
+
+// .homepage {
+//     min-width: 500px;
   
-}
+// }
 
 
 $hexagon-width: 100px;
 $hexagon-height: $hexagon-width*.55;
 $hexagon-margin: 8px;
 $hexagon-title-color: #fff;
-$hexagon-border-color: $green-theme;
+$hexagon-border-color: $themegreen;
 $hexagon-border-color--hover: #72f88e;
 $hexagon-image-color: #3ea0eb;
 $honeycomb-max-width: 1200px;
@@ -62,9 +80,9 @@ body {
   background: $crudo;
 }
 
-.bcomment {
-  background-color: $dark-green;
-}
+// .bcomment {
+//   background-color: $darkgreen;
+// }
 *, *::before, *::after {
   box-sizing: border-box;
 }
@@ -149,7 +167,7 @@ body {
       }
       
       &::before {
-        background: $pink-theme;
+        background: #ea97ad;
       }
 
       &::after {
