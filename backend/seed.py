@@ -44,7 +44,7 @@ with app.app_context():
     print('User created')
 
     resp = requests.get(
-        'https://data.opendatasoft.com/api/records/1.0/search/?dataset=world-heritage-list%40public-us&rows=1300')
+        'https://data.opendatasoft.com/api/records/1.0/search/?dataset=world-heritage-list%40public-us&rows=20')
     # &facet=region&facet=states
     heritage_list = resp.json()
     heritage_filtered_records = heritage_list['records']
@@ -54,38 +54,6 @@ with app.app_context():
     result_1 = result[0]
     # pprint.pprint(heritage_filtered_records)
 
-    # def mapper(record):
-    #     if not record['fields']['location']:
-    #         return {'province': 'not found',
-    #                 'region': record['fields']['region'],
-    #                 'name': record['fields']['site'],
-    #                 'latitude': record['fields']['coordinates'][0],
-    #                 'longitude': record['fields']['coordinates'][1],
-    #                 'country': record['fields']['states'],
-    #                 'description': record['fields']['short_description'],
-    #                 'thumbnail_id': record['fields']['image_url']['id'],
-    #                 # image=heritage_filtered_dictionary[''],
-    #                 'weblink': record['fields']['http_url'],
-    #                 'date_inscribed': record['fields']['date_inscribed'],
-    #                 'user': balta
-
-    #                 }
-    #     else:
-
-    #         return {'region': record['fields']['region'],
-    #             'name': record['fields']['site'],
-    #             'latitude': record['fields']['coordinates'][0],
-    #             'longitude': record['fields']['coordinates'][1],
-    #             'country': record['fields']['states'],
-    #             'province': record['fields']['location'],
-    #             'description': record['fields']['short_description'],
-    #             'thumbnail_id': record['fields']['image_url']['id'],
-    #             # image=heritage_filtered_dictionary[''],
-    #             'weblink': record['fields']['http_url'],
-    #             'date_inscribed': record['fields']['date_inscribed'],
-    #             'user': balta
-
-    #             }
     def mapper(record):
 
 
@@ -118,9 +86,7 @@ with app.app_context():
             google_place_id = 'ChIJO7l_l7f8cQ0Rf6IhEu_RjYA'
             record['place_id'] = google_place_id
             return record
-            # google_formatted_address = 'not found'
-            # record['formatted_address'] = google_formatted_address
-            # return record
+       
         else:
             google_place_id = google_dict['results'][0]['place_id']
             record['place_id'] = google_place_id
@@ -128,14 +94,7 @@ with app.app_context():
             # google_result = google_dict['results'][0]
             return record
 
-            # if not google_result['formatted_address']:
-            #     google_formatted_address = 'not found'
-            #     record['formatted_address'] = google_formatted_address
-            #     return record
-            # else:
-            #     google_formatted_address = google_dict['results'][0]['formatted_address']
-            #     record['formatted_address'] = google_formatted_address
-            #     return record
+
 
     filtered_with_id = (list(map(google_id_mapper, filtered)))
     # pprint.pprint(filtered_with_id)
@@ -145,7 +104,7 @@ with app.app_context():
         pprint.pprint(record['place_id'])
 
         resp_2 = requests.get(
-            f'https://maps.googleapis.com/maps/api/place/details/json?place_id={place_id}&fields=photo,name,formatted_address,geometry,icon,business_status,vicinity,international_phone_number,opening_hours,website&key={Google_API}')
+            f'https://maps.googleapis.com/maps/api/place/details/json?place_id={place_id}&fields=photo,name&key={Google_API}')
     # &facet=region&facet=states
         google_dict = resp_2.json()
         pprint.pprint(google_dict)
@@ -207,20 +166,7 @@ with app.app_context():
 
     print('Sites created')
 
-    # comment = Comment(
-    #     content='I love this place ',
-    #     # rating=5,
-    #     user=balta,
-    #     site=alhambra
-    # )
-    # print('Comment created')
 
-    # favourite = Favourites(
-    #     user_id=1,
-    #     site_id=1
-    # )
-    # print('Favourites created')
-    # print('Favourites created')
 
     print('Adding to database:')
     # db.session.add(alhambra)
@@ -229,8 +175,6 @@ with app.app_context():
     db.session.add_all(sites_to_make)
 
     # db.session.add(palau)
-    # db.session.add(comment)
-    # db.session.add(favourite)
 
     db.session.commit()
     print('Completed!')

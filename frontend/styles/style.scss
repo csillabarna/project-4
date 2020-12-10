@@ -1,5 +1,4 @@
 @charset "utf-8";
-@import "../../node_modules/bulma/bulma.sass";
 // Set your brand colors
 $crudo: #f3f2da;
 $green-theme: #4e8d7c;
@@ -12,6 +11,7 @@ $brown: #727070;
 $green: #056674;
 $beige-light: #e0ece4;
 $beige-lighter: #e0ece4;
+
 
 // Update Bulma's global variables
 $family-sans-serif: "Nunito", sans-serif;
@@ -33,7 +33,9 @@ $navbar-breakpoint: 400px;
   width: 100%;
   text-align: end;
 }
-
+.navbar {
+  background-color: $dark-green;
+}
 .homepage {
     min-width: 500px;
   
@@ -52,6 +54,7 @@ $viewport-thereshold: $hexagon-width + $hexagon-margin;
  
 
 @import url('https://fonts.googleapis.com/css?family=Montserrat:400,700');
+@import "../../node_modules/bulma/bulma.sass";
 
 body {
   font-family: 'Montserrat', sans-serif;
@@ -206,3 +209,4 @@ body {
     display:block;
   }
 }
+

@@ -23,7 +23,7 @@ const Navbar = (props) => {
       })
   }, []) 
 
-  return <nav className="navbar is-black">
+  return <nav className="navbar is-link">
     <div className="navbar-menu is-active">
       <div className="navbar-start">
         <div className="navbar-item">
