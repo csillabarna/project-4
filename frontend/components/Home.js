@@ -29,7 +29,7 @@ const Home = () => {
         </div>
         <div className="column is-block-widescreen-only is-hidden-desktop-only">
           <div className="honeycomb" lang="es">
-            {sites.slice(1, 29).map((site, index) => {
+            {sites.slice(30, 58).map((site, index) => {
               return <Link className="honeycomb-cell" key={index} to={`/sites/${site.id}`}>
                 <img className="honeycomb-cell__image" src={`http://data.opendatasoft.com/explore/dataset/world-heritage-list@public-us/files/${site.thumbnail_id}/300`} />
                 {/* <div className="honeycomb-cell__title">{site.name}</div> */}
