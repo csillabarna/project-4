@@ -12,4 +12,4 @@ class CommentSchema(ma.SQLAlchemyAutoSchema, BaseSchema):
     
   user_id = fields.Integer()
   
-  user = fields.Nested('UserSchema', only=('id', 'username'))
+  user = fields.Nested('UserSchema', only=('id', 'username', 'user_avatar'))

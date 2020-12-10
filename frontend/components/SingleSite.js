@@ -5,7 +5,10 @@ import { isCreator } from '../lib/auth'
 import Map from './Map'
 import ImageGallery from 'react-image-gallery'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHeart } from '@fortawesome/free-solid-svg-icons'
+import { fas, faHeart, faEdit } from '@fortawesome/free-solid-svg-icons'
+
+import { far } from '@fortawesome/free-regular-svg-icons'
+
 
 // # SCSS
 import '../../node_modules/react-image-gallery/styles/scss/image-gallery.scss'
@@ -83,19 +86,19 @@ const SingleSite = (props) => {
   const images = []
   function handleImages(img) {
     img.map((photo, index) => {
-      console.log(photo.photo_reference)
+      // console.log(photo.photo_reference)
       const sitesImages = {
         original: `https://maps.googleapis.com/maps/api/place/photo?photoreference=${photo.photo_reference}&sensor=false&maxwidth=700&key=${process.env.Google_API}`,
         thumbnail: `https://maps.googleapis.com/maps/api/place/photo?photoreference=${photo.photo_reference}&sensor=false&maxwidth=400&key=${process.env.Google_API}`
       }
 
-      console.log(sitesImages)
+      // console.log(sitesImages)
       images.push(sitesImages)
-      console.log(images)
+      // console.log(images)
       return images
 
     })
-    console.log(images)
+    // console.log(images)
     return images
   }
   function deleteFromWish() {
@@ -117,31 +120,58 @@ const SingleSite = (props) => {
       </div>
     </div>
   }
-  return <div>
+  return <div className='container'>
     <div className="section">
       <div className="container">
-        {site.image && <ImageGallery items={handleImages(site.image)
-        } />}
+        <div className="columns">
 
-        <img src={site.image} alt={site.name} />
-        <h1 className="title">{site.name}</h1>
-        <h2 className="subtitle">{site.country}</h2>
-        <h2 className="subtitle">{site.description}</h2>
-        <h2 className="subtitle">{site.region} region</h2>
+          {/* image gallery */}
+          <div className="column is-three-fifths">
+            {site.image && <ImageGallery lazyLoad={true} fullscreen={false} items={handleImages(site.image)
+            } />}
+          </div>
+          {/* side column with info and map */}
+          <div className="column is-two-fifths">
+            <nav className="columns ">
+              <div className="column is-10">
+                <h1 className="title">{site.name}</h1>
+                {/* <h2 className="subtitle">{site.region} region</h2> */}
 
-        <h2 className="subtitle"> This site inscribed on UNESCO’s World Heritage List in : {site.date_inscribed}</h2>
-        {/* <h2 className="subtitle">get more info {site.weblink} </h2> */}
+                <h2 className="subtitle">{site.country}</h2>
+                <h2 className="content"> Inscribed on UNESCO’s World Heritage List in {site.date_inscribed}</h2>
+              </div>
+              <div className="column is-1">
+                {fav ? <button className="button level-item" onClick={deleteFromWish}>                <FontAwesomeIcon icon={faHeart} color='#ea97ad' />
+                </button>
+                  : <button className="button" onClick={addWish}><span><FontAwesomeIcon color="green-theme" icon={faHeart} /></span>
+                  </button>
+                }
+              </div>
+            </nav>
 
-        <div>
-          <br />
+            <div className="columns is-centered m-1 is-mobile"><Map site={site} /></div>
+            <br />
+          </div>
 
-          <div className="columns is-centered m-1 is-mobile"><Map site={site} /></div>
-          <br />
         </div>
-        {fav ? <button className="button" onClick={deleteFromWish}>delete from Wishlist </button>
-          : <button className="button" onClick={addWish}><span><FontAwesomeIcon color="green" icon={faHeart} /></span>
-          </button>
-        }
+        {/* <div className="columns"></div> */}
+      </div>
+
+      <div className="columns">
+        <div className="column is-12">
+                <h2 className="subtitle">{site.description}</h2>
+
+        </div>
+      </div>
+      {/* <img src={site.image} alt={site.name} /> */}
+
+
+      {/* <h2 className="subtitle">get more info {site.weblink} </h2> */}
+
+      <div>
+        <br />
+
+
         {/* <button className="heart" onClick={add}> */}
         {/*  */}
         {/* </button> */}
@@ -153,23 +183,34 @@ const SingleSite = (props) => {
           return <article
             key={comment.id} className="media">
             <figure className="media-right">
+
               <p className="image is-64x64">
                 <img src={comment.user.user_avatar} />
               </p>
+              {console.log(site, comment)}
+
+
             </figure>
             <div className="media-content">
-              <div className="content">
-                <p className="subtitle">
-                  <strong> {comment.user.username} </strong>
-                  <small className="media-right"> posted:  {comment.created_at} </small>
+              <div className="content pl-3">
+                <p><strong className="is-capitalized dark-green" color='#045762'> {comment.user.username} </strong> <small className="media-right"> posted:  {comment.created_at} </small>
                   <br />
                   {comment.content} </p>
+
+
               </div>
+              
+
+              
 
 
 
             </div>
+            {/* {isCreator(comment.user.id) && } */}
             {isCreator(comment.user.id) && <div className="media-right">
+              <Link className="icon" to={`/comment/${comment.id}`}>
+                <FontAwesomeIcon icon={faEdit} color='#045762' />
+              </Link>
               <button
                 className="delete"
                 onClick={() => handleDeleteComment(comment.id)}>
@@ -177,9 +218,7 @@ const SingleSite = (props) => {
               </button>
             </div>}
             {console.log(`comment.id is : ${comment.id}`)}
-            {isCreator(comment.user.id) && <Link className="button is-small" to={`/comment/${comment.id}`}>
-              Edit 🖊️
-            </Link>}
+
 
           </article>
         })}
@@ -192,7 +231,7 @@ const SingleSite = (props) => {
               <p className="control">
                 <textarea
                   className="textarea"
-                  placeholder="Make a comment.."
+                  placeholder="Share your comments on this site..."
                   onChange={event => updateContent(event.target.value)}
                   value={content}>
                   {content}
@@ -203,7 +242,7 @@ const SingleSite = (props) => {
               <p className="control">
                 <button
                   onClick={handleComment}
-                  className="button is-info">
+                  className="button is-link">
                   Submit
                 </button>
               </p>

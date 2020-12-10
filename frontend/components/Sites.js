@@ -32,9 +32,10 @@ const Sites = () => {
 
   return <>
 
-    <div className="columns">
-      <div className="field has-addons column">
-        <div className="control">
+    <div className="columns is-mobile is-centered section">
+      <div className="field has-addons column is-half has-text-centered is-align-items-center">
+
+        <div className="control bd-notification is-primary is-centered">
           <input className="input is-family-code search"
             placeholder="search for country"
             onChange={(event) => updateSearch(event.target.value)}
@@ -52,7 +53,7 @@ const Sites = () => {
     </div>
 
     <div className="columns is-multiline is-mobile">
-      {sites.map((site, index) => {
+      {sites.slice(1, 10).map((site, index) => {
         return <div
           className="column is-one-third-desktop is-half-tablet is-half-mobile"
           key={index}

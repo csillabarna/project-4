@@ -1,4 +1,29 @@
+@charset "utf-8";
+@import "../../node_modules/bulma/bulma.sass";
+// Set your brand colors
+$crudo: #f3f2da;
+$green-theme: #4e8d7c;
+$dark-green: #045762;
+$pink-theme: #ea97ad;
 
+$purple: #66bfbf;
+$pink: #fa7c91;
+$brown: #727070;
+$green: #056674;
+$beige-light: #e0ece4;
+$beige-lighter: #e0ece4;
+
+// Update Bulma's global variables
+$family-sans-serif: "Nunito", sans-serif;
+$grey-dark: $pink-theme;
+$grey-light: $beige-light;
+$primary: $crudo;
+$secondary: $green-theme;
+$link: $dark-green;
+$widescreen-enabled: false;
+$fullhd-enabled: false;
+$navbar-breakpoint: 400px;
+// $desktop: 500px;
 
 .heart{
   outline: none;
@@ -9,23 +34,33 @@
   text-align: end;
 }
 
+.homepage {
+    min-width: 500px;
+  
+}
+
 $hexagon-width: 100px;
 $hexagon-height: $hexagon-width*.55;
-$hexagon-margin: 5px;
+$hexagon-margin: 8px;
 $hexagon-title-color: #fff;
-$hexagon-border-color: #fff;
+$hexagon-border-color: $green-theme;
 $hexagon-border-color--hover: #72f88e;
 $hexagon-image-color: #3ea0eb;
 $honeycomb-max-width: 1200px;
 $viewport-thereshold: $hexagon-width + $hexagon-margin;
 
+ 
+
 @import url('https://fonts.googleapis.com/css?family=Montserrat:400,700');
 
 body {
   font-family: 'Montserrat', sans-serif;
-  // background: #3ea0eb;
+  background: $crudo;
 }
 
+.bcomment {
+  background-color: $dark-green;
+}
 *, *::before, *::after {
   box-sizing: border-box;
 }
@@ -94,12 +129,12 @@ body {
 
     &::before {
       background: $hexagon-border-color;
-      transform: scale(1.020);
+      transform: scale(1.060);
     }
 
     &::after {
       background: $hexagon-image-color;
-      opacity: 0.5;
+      opacity: 0.3;
       transition: opacity 350ms;
     }
 
@@ -110,7 +145,7 @@ body {
       }
       
       &::before {
-        background: $hexagon-border-color--hover;
+        background: $pink-theme;
       }
 
       &::after {

@@ -26,7 +26,7 @@ const User = (props) => {
   }, [])
 
 
-  
+
   if (!user.username) {
     return <div className="section">
       <div className="container">
@@ -40,28 +40,32 @@ const User = (props) => {
 
   return <div className="container is-fluid mt-5">
     <div className="columns">
-      <div className="column">
+      <div className="column is-2">
         <figure className="image is-128x128 is-justify-content-center">
           <img className="" src={user.user_avatar} />
+          {token && <Link className="button is-primary mt-4" to={`/user/${user.id}/edit`}>
+            Edit Profile
+          </Link>}
         </figure>
+
+      </div>
+      <div className="column">
         <div className="container is-fluid has-text-centered mt-5">
           <h1 className="title is-1 is-capitalized">{user.username}</h1>
           <h2 className="subtitle is-3">{user.user_city}</h2>
           <h2 className="subtitle is-3">A bit about yourself:</h2>
           <p>{user.user_bio}</p>
-          {token && <Link className="button is-primary" to={`/user/${user.id}/edit`}>
-          Edit Profile
-          </Link>}
+
         </div>
       </div>
       <div className="column is-one-third">
         <div className="tile is-ancestor">
           <div className="tile is-vertical is-parent">
 
-            <h1>my favourite places</h1>
+            <h1 className='subtitle'>my favourite places</h1>
 
             {user.favourites && user.favourites.map((favourite, index) => {
-              
+
               return <div className="tile is-child box" key={index}>
                 <Link to={`/sites/${favourite.site_id}`} >
                   <div className="media">
