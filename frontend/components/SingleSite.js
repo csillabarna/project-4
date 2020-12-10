@@ -88,8 +88,8 @@ const SingleSite = (props) => {
     img.slice(0, 4).map((photo, index) => {
       // console.log(photo.photo_reference)
       const sitesImages = {
-        original: `https://maps.googleapis.com/maps/api/place/photo?photoreference=${photo.photo_reference}&sensor=false&maxwidth=700&key=${process.env.Google_API}`,
-        thumbnail: `https://maps.googleapis.com/maps/api/place/photo?photoreference=${photo.photo_reference}&sensor=false&maxwidth=400&key=${process.env.Google_API}`
+        original: photo.photo_reference ? `https://maps.googleapis.com/maps/api/place/photo?photoreference=${photo.photo_reference}&sensor=false&maxwidth=700&key=${process.env.Google_API}` : photo,
+        thumbnail: photo.photo_reference ? `https://maps.googleapis.com/maps/api/place/photo?photoreference=${photo.photo_reference}&sensor=false&maxwidth=400&key=${process.env.Google_API}` : photo
       }
 
       // console.log(sitesImages)

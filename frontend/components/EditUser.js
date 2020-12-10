@@ -57,8 +57,8 @@ const EditUser = (props) => {
 
   return <main className="updateUserMain">
 
-    <h1>Hi <strong>{formData.username}</strong></h1>
-    <h2>Update your Profile</h2>
+    <h1 className='m-5 mx-6 is-capitalized'>Hi <strong>{formData.username}</strong></h1>
+    <h2 className='m-5 mx-6'>Update your Profile</h2>
     <div className="userImage">
       <img src={formData.image} />
     </div>
@@ -160,7 +160,7 @@ const EditUser = (props) => {
 
     </form>
     {token &&
-      <button className="button is-danger" onClick={handleDelete}>
+      <button className="button is-danger 'm-5 mx-6 is-small" onClick={handleDelete}>
         Delete
       </button>}
   </main>

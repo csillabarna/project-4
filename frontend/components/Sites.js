@@ -34,15 +34,14 @@ const Sites = () => {
 
     <div className="columns is-mobile is-centered section">
       <div className="field has-addons column is-half has-text-centered is-align-items-center">
-
         <div className="control bd-notification is-primary is-centered">
-          <input className="input is-family-code search"
+          <input className="input search is-large "
             placeholder="search for country"
             onChange={(event) => updateSearch(event.target.value)}
             value={search} />
         </div>
         <div className="control">
-          <button className="button is-family-code is-link"
+          <button className="button is-link is-large"
             onClick={() => {
               updateSearched(search)
             }}>

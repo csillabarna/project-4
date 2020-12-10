@@ -70,7 +70,7 @@ const Signup = () => {
     <Modal isOpen={closed}>
       <p>Please check your inbox to confirm your email address </p>
       <div className="modal-card">
-        <Link to={'/'}><button className="button is-black">ok</button></Link>
+        <Link to={'/'}><button className="button is-brown ">ok</button></Link>
       </div>
     </Modal>
 

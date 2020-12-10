@@ -22,7 +22,8 @@ $link: $pink;
 $widescreen-enabled: false;
 $fullhd-enabled: false;
 #stronguser {
-  color: $purple;
+  color: $crudo;
+  font-size: larger;
 }
 // $purple: #66bfbf;
 // $pink: #fa7c91;
@@ -54,6 +55,10 @@ $navbar-breakpoint: 700px;
   text-align: end;
 }
 
+#logo{
+  height:90%;
+  width: 60%;
+}
 // .homepage {
 //     min-width: 500px;
   

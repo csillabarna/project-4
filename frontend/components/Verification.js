@@ -37,7 +37,7 @@ const Verification = (props) => {
         <h3 className='subtitle is-2 has-text-black'>Yor email address has been confirmed!✅</h3>
         <h3 className='subtitle is-2 has-text-black'>Thank you</h3>
         <br></br>
-        <Link className='button is-large is-black is-outlined' to={'/login'}>Please login</Link>
+        <Link className='button is-large is-link is-outlined' to={'/login'}>Please login</Link>
       </div>
       :
       <h2 className='subtitle is-2 has-text-black'>Verification Failed!</h2>}
