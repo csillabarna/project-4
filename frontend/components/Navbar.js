@@ -40,7 +40,7 @@ const Navbar = (props) => {
         <div className="navbar-item">
           <div className="buttons ">
             <Link className="button is-light" to="/">Home</Link>
-            <Link className="button is-primary has-text-weight-semibold" to="/sites">KNOW YOUR HERITAGE</Link>
+            <Link className="button is-grey-light has-text-weight-semibold" to="/sites">KNOW YOUR HERITAGE</Link>
           </div>
 
         </div>
