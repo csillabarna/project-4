@@ -47,7 +47,7 @@ const Sites = () => {
               updateSearched(search)
             }}>
             Search
-        </button>
+          </button>
         </div>
       </div>
     </div>
