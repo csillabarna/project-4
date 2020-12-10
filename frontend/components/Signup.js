@@ -49,8 +49,7 @@ const Signup = () => {
 
   function handleSubmit(event) {
     event.preventDefault()
-
-    ('api/signup', formData)
+    axios.post('api/signup', formData)
       .then(resp => {
         if (resp.data.errors) {
           updateErrors(resp.data.errors)
@@ -143,6 +142,17 @@ const Signup = () => {
           </p>}
         </div>
         <p className="help">Let us know which city you are based in</p>
+      </div>
+      <div className="field">
+        <label className="label">Profile Picture</label>
+        <input
+          type="text"
+          onChange={handleChange}
+          value={formData.user_avatar}
+          name="user_avatar"
+          className="input"
+
+        />
       </div>
       <div className="field">
         <label className="label">Password</label>

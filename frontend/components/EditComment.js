@@ -47,30 +47,33 @@ const EditComment = (props) => {
   }
 
 
-  return <article className="media">
-    <div className="media-content">
-      <div className="field">
-        <p className="control">
-          <textarea
-            className="textarea"
-            onChange={handleChange}
-            value={comment.content}
-            name='content'>
-            {comment.content}
-          </textarea>
-        </p>
-      </div>
-      <div className="field">
-        <p className="control">
-          <button
-            onClick={handleUpdateComment}
-            className="button is-info">
-            Save
+  return <div className="container">
+    <article className="media">
+      <div className="media-content">
+        <div className="field">
+          <p className="control">
+            <textarea
+              className="textarea"
+              onChange={handleChange}
+              value={comment.content}
+              name='content'>
+              {comment.content}
+            </textarea>
+          </p>
+        </div>
+        <div className="field">
+          <p className="control">
+            <button
+              onClick={handleUpdateComment}
+              className="button is-link">
+              Save
           </button>
-        </p>
+          </p>
+        </div>
       </div>
-    </div>
-  </article>
+    </article>
+  </div>
+
 }
 
 export default EditComment

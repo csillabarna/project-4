@@ -43,7 +43,7 @@ const User = (props) => {
       <div className="column is-2">
         <figure className="image is-128x128 is-justify-content-center">
           <img className="" src={user.user_avatar} />
-          {token && <Link className="button is-primary mt-4" to={`/user/${user.id}/edit`}>
+          {token && <Link className="button is-link mt-4" to={`/user/${user.id}/edit`}>
             Edit Profile
           </Link>}
         </figure>

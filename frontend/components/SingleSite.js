@@ -141,7 +141,7 @@ const SingleSite = (props) => {
                 <h2 className="content"> Inscribed on UNESCO’s World Heritage List in {site.date_inscribed}</h2>
               </div>
               <div className="column is-1">
-                {fav ? <button className="button level-item" onClick={deleteFromWish}>
+                {localStorage.getItem('token') && fav ? <button className="button level-item" onClick={deleteFromWish}>
                   <FontAwesomeIcon icon={faHeart} color='#ea97ad' />
                 </button>
                   : <button className="button" onClick={addWish}><span>

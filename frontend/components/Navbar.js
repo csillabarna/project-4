@@ -18,7 +18,7 @@ const Navbar = (props) => {
     axios.get(`/api/users/${currentUserId}`)
       .then(res => {
         const data = res.data
-        console.log(data)
+        // console.log(data)
         updateUser(data)
       })
   }, [])
@@ -46,8 +46,8 @@ const Navbar = (props) => {
 
 
             {localStorage.getItem('token') &&
-              <div className="mr-3"> <p> Welcome back <Link className="is-capitalized" to={`/user/${currentUserId}`}>
-                <strong className="is-grey-dark"> {user.username} </strong></Link></p></div>
+              <div className="mr-3"> <p> Welcome back <Link className="is-capitalized is-grey-dark" to={`/user/${currentUserId}`}>
+                <strong className="is-capitalized is-grey-dark"> {user.username} </strong></Link></p></div>
             }
 
             {localStorage.getItem('token') && <button
