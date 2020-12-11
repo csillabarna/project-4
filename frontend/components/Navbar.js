@@ -28,24 +28,25 @@ const Navbar = (props) => {
     <div className="navbar-brand">
       <Link to="/">
         <img className="image is-64x64" src="https://res.cloudinary.com/greenupload/image/upload/v1607631126/logo_gva9qr.jpg" alt="logo" /></Link>
+      <div className="navbar-item">
+        <div className="buttons ">
+          {/* <Link className="button is-light" to="/">Home</Link> */}
+          <Link className="button is-grey-light has-text-link has-text-weight-bold logo" to="/sites">Know your Heritage</Link>
+        </div>
+
+      </div>
       <a role="button" className={`navbar-burger burger ${isActive ? 'is-active' : ''}`} aria-label="menu" aria-expanded="false" data-target="navbarinfo" onClick={() => setisActive(!isActive)}>
         <span aria-hidden="true"></span>
         <span aria-hidden="true"></span>
         <span aria-hidden="true"></span>
       </a>
     </div>
+    {/* <div className="navbar-start">
 
+
+    </div> */}
     <div id="navbarinfo" className={`navbar-menu ${isActive ? 'is-active' : ''}`}>
-      <div className="navbar-start">
-        <div className="navbar-item">
-          <div className="buttons ">
-            <Link className="button is-light" to="/">Home</Link>
-            <Link className="button is-grey-light has-text-weight-semibold" to="/sites">KNOW YOUR HERITAGE</Link>
-          </div>
 
-        </div>
-
-      </div>
       <div className="navbar-end">
         <div className="navbar-item">
           <div className="buttons">

@@ -37,7 +37,7 @@ const Sites = () => {
 
         <div className="control bd-notification is-primary is-centered">
           <input className="input is-family-code search"
-            placeholder="search for country"
+            placeholder="Type a country"
             onChange={(event) => updateSearch(event.target.value)}
             value={search} />
         </div>

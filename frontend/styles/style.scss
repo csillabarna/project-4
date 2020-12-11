@@ -5,7 +5,7 @@ $themegreen: #4e8d7c;
 $darkgreen: #045762;
 $themepink: #ea97ad;
 
-
+@import url('https://fonts.googleapis.com/css2?family=Orbitron&display=swap');
 // Set your brand colors
 $purple:#ea97ad;
 $pink:  #045762;
@@ -53,7 +53,10 @@ $navbar-breakpoint: 700px;
   width: 100%;
   text-align: end;
 }
-
+.logo {
+  font-family: 'Orbitron', sans-serif;
+  color: $pink;
+}
 // .homepage {
 //     min-width: 500px;
   
