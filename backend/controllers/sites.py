@@ -27,7 +27,6 @@ def index():
     sites = Site.query.all()
     return site_schema.jsonify(sites, many=True), 200
 
-
 #search
 @router.route('/search/<name>', methods=['GET'])
 def search(name):

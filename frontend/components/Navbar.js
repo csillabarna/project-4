@@ -22,16 +22,17 @@ const Navbar = (props) => {
         // console.log(data)
         updateUser(data)
       })
+    // this props.match will update the site once we loged in as well 
   }, [props.match])
 
   return <nav className="navbar is-link" role='navigation' aria-label="main navigation">
     <div className="navbar-brand">
       <Link to="/">
-        <img className="image is-64x64" src="https://res.cloudinary.com/greenupload/image/upload/v1607631126/logo_gva9qr.jpg" alt="logo" /></Link>
+        <img className="image is-64x64" id="logo" src="https://res.cloudinary.com/greenupload/image/upload/v1607631126/logo_gva9qr.jpg" alt="logo" /></Link>
       <div className="navbar-item">
         <div className="buttons ">
           {/* <Link className="button is-light" to="/">Home</Link> */}
-          <Link className="button is-grey-light has-text-link has-text-weight-bold logo" to="/sites">Know your Heritage</Link>
+          <Link className="button is-grey-light has-text-link has-text-weight-bold logobutton" to="/sites">Know your Heritage</Link>
         </div>
 
       </div>
@@ -50,33 +51,23 @@ const Navbar = (props) => {
       <div className="navbar-end">
         <div className="navbar-item">
           <div className="buttons">
-
             {!localStorage.getItem('token') && <Link className="button is-light" to="/signup">Sign up</Link>}
             {!localStorage.getItem('token') &&
               <Link className="button is-primary has-text-weight-semibold" to="/login">Login</Link>}
-
-
             {localStorage.getItem('token') &&
               <div className="mr-3"> <p> Welcome back <Link className="is-capitalized" to={`/user/${currentUserId}`}>
-                <strong id="stronguser"> {user.username} </strong></Link></p></div>
-            }
-
-            {localStorage.getItem('token') && <button
-              className="button is-light"
-              onClick={handleLogout}
-            >
-              Logout
-          </button>}
+                <strong id="stronguser"> {user.username} </strong></Link></p></div>}
+            {localStorage.getItem('token') &&
+              <button
+                className="button is-brown is-small"
+                onClick={handleLogout}>
+                Logout
+             </button>}
           </div>
-
         </div>
       </div>
-
     </div>
-
-
   </nav>
 }
-
 //  withRouter will give us the route props we have on every route, e.g. match, location, history
 export default withRouter(Navbar)

@@ -44,7 +44,7 @@ with app.app_context():
     print('User created')
 
     resp = requests.get(
-        'https://data.opendatasoft.com/api/records/1.0/search/?dataset=world-heritage-list%40public-us&rows=30')
+        'https://data.opendatasoft.com/api/records/1.0/search/?dataset=world-heritage-list%40public-us&rows=60')
     # &facet=region&facet=states
     heritage_list = resp.json()
     heritage_filtered_records = heritage_list['records']
@@ -72,8 +72,7 @@ with app.app_context():
                 'user': balta}
 
     filtered = (list(map(mapper, result_1)))
-    print(type(filtered))
-    pprint.pprint(filtered)
+    # pprint.pprint(filtered)
 
     def google_id_mapper(record):
         name = record['name']
@@ -81,7 +80,8 @@ with app.app_context():
             f'https://maps.googleapis.com/maps/api/place/textsearch/json?query={name}&key={Google_API}')
     # &facet=region&facet=states
         google_dict = resp_1.json()
-        # print(type(google_list), google_list)
+        # print(resp_1)
+        # print(google_dict)
         if not google_dict['results']:
             google_place_id = 'ChIJO7l_l7f8cQ0Rf6IhEu_RjYA'
             record['place_id'] = google_place_id
@@ -107,7 +107,7 @@ with app.app_context():
             f'https://maps.googleapis.com/maps/api/place/details/json?place_id={place_id}&fields=photo,name&key={Google_API}')
     # &facet=region&facet=states
         google_dict = resp_2.json()
-        pprint.pprint(google_dict)
+        # pprint.pprint(google_dict)
         if place_id == 'ChIJO7l_l7f8cQ0Rf6IhEu_RjYA':
             record['image'] = ['https://images.unsplash.com/photo-1531944213227-db53a6d0f3bd?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1941&q=80']
             return record
@@ -123,7 +123,7 @@ with app.app_context():
     # https://maps.googleapis.com/maps/api/place/photo?photoreference=PHOTO_REFERENCE&sensor=false&maxheight=MAX_HEIGHT&maxwidth=MAX_WIDTH&key=YOUR_API_KEY
 
     filtered_with_photo = (list(map(google_photo_mapper, filtered_with_id)))
-    pprint.pprint(filtered_with_photo)
+    # pprint.pprint(filtered_with_photo)
 
     sites_to_make = []
     for site in filtered_with_photo:
