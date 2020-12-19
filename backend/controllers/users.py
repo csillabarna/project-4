@@ -31,7 +31,7 @@ def signup():
         base_URL = 'https://know-your-heritage.herokuapp.com'
         message = Mail(from_email = "whprojectapp2020@gmail.com",
           to_emails = user.email,
-          subject = "Email verificaton from WH",
+          subject = "Email verification from WH",
           html_content = f'<a href="{base_URL}/verification/{user.id}">Please verify your email address</a>'
           )
         try:
