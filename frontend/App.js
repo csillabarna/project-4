@@ -27,8 +27,6 @@ const App = () => (
       <Route exact path="/verification/:id" component={Verification} />
       <Route exact path="/comment/:id" component={EditComment} />
 
-
-
       <Route exact path="/signup" component={Signup} />
       <Route exact path="/login" component={Login} />
 
