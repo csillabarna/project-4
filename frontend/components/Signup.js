@@ -68,9 +68,9 @@ const Signup = () => {
   return <>
     {/* alert */}
     <Modal isOpen={closed}>
-      <p>Please check your inbox to confirm your email address </p>
-      <div className="modal-card">
-        <Link to={'/'}><button className="button is-brown ">ok</button></Link>
+      <div className="modal-card mt-5 pt-3">
+        <p className="title mt-3">Please check your inbox to confirm your email address </p>
+        <Link to={'/'}><button className="button is-success ">OK</button></Link>
       </div>
     </Modal>
 
