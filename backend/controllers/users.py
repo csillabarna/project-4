@@ -8,7 +8,7 @@ from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
 from marshmallow import ValidationError
 from email_validator import validate_email, EmailNotValidError
-
+from sqlalchemy import exc
 
 
 user_schema = UserSchema()
@@ -32,7 +32,7 @@ def signup():
         message = Mail(from_email = "whprojectapp2020@gmail.com",
           to_emails = user.email,
           subject = "Email verification from WH",
-          html_content = f'<a href="{base_URL}/verification/{user.id}">Please verify your email address</a>'
+          html_content = f'<a href="{base_URL}/verification/{user.id}">Please click here to verify your email address</a>'
           )
         try:
           sg = SendGridAPIClient(os.environ['SENDGRID_API_KEY'])
@@ -45,9 +45,11 @@ def signup():
     except EmailNotValidError as e:
       print(str(e))
       return str(e)
-    user.save()
+    try: 
+      user.save()
+    except exc.IntegrityError as e:
+      return str(e.orig.args), 409
     send(user)
-
     return user_schema.jsonify(user), 200
 
 
@@ -58,6 +60,8 @@ def signup():
 @router.route('/verification/<int:id>',methods=['PUT'])
 def confirm(id):
   current_user = User.query.get(id)
+  print(current_user)
+
   if current_user.is_confirmed:
     return f'Email already verified'
   else:
