@@ -1,4 +1,4 @@
-## General Assembly, Software Engineering Immersive - project 4
+### ![GA](https://cloud.githubusercontent.com/assets/40461/8183776/469f976e-1432-11e5-8199-6ac91363302b.png) General Assembly, Software Engineering Immersive
  
 # Know Your Heritage 
 A PostgreSQL, Python, Flask & React Full Stack Application which showcases UNESCO's world heritage list. The user is able to comment on sites and add their favourites to the wish list. 
