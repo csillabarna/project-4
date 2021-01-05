@@ -16,7 +16,22 @@ populated_user_schema = PopulatedUserSchema()
 print(populated_user_schema)
 router = Blueprint(__name__, 'users')
 
-
+ # user verification by email 
+def send(base_URL,sender,user):
+  message = Mail(from_email = sender,
+    to_emails = user.email,
+    subject = "Email verification from WH",
+    html_content = f'<a href="{base_URL}/verification/{user.id}">Please click here to verify your email address</a>'
+    )
+  try:
+    sg = SendGridAPIClient(os.environ['SENDGRID_API_KEY'])
+    response = sg.send(message)
+    print(response.status_code)
+    print(response.body)
+    print(response.headers)
+  except Exception as e:
+    print(str(e), message)
+      
 # register user
 @router.route('/signup', methods=['POST'])
 def signup():
@@ -26,34 +41,14 @@ def signup():
     try:
       valid = validate_email(email)
       email = valid.email
-      # user verification by email 
-      def send(user):
-        base_URL = 'https://know-your-heritage.herokuapp.com'
-        message = Mail(from_email = "whprojectapp2020@gmail.com",
-          to_emails = user.email,
-          subject = "Email verification from WH",
-          html_content = f'<a href="{base_URL}/verification/{user.id}">Please click here to verify your email address</a>'
-          )
-        try:
-          sg = SendGridAPIClient(os.environ['SENDGRID_API_KEY'])
-          response = sg.send(message)
-          print(response.status_code)
-          print(response.body)
-          print(response.headers)
-        except Exception as e:
-          print(str(e), message)
     except EmailNotValidError as e:
-      print(str(e))
-      return str(e)
+      return str(e), 400
     try: 
       user.save()
     except exc.IntegrityError as e:
       return str(e.orig.args), 409
-    send(user)
+    send('https://know-your-heritage.herokuapp.com', 'whprojectapp2020@gmail.com', user)
     return user_schema.jsonify(user), 200
-
-
-
 
  
 #verify user
