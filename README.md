@@ -3,7 +3,7 @@
 # Know Your Heritage 
 A PostgreSQL, Python, Flask & React Full Stack Application which showcases UNESCO's world heritage list. The user is able to comment on sites and add their favourites to the wish list. 
 
-Deployed on Heroku: know-your-heritage.herokuapp.com
+Deployed on Heroku: [Know Your Heritage](https://know-your-heritage.herokuapp.com)
 
 Quick peek of the working app ⬇️
 
@@ -34,6 +34,9 @@ The concept was to work remotely in a group of two for 7 days to create a full-s
 - Insomnia 
 - Git and GitHub 
 - Heroku
+- Mapbox (React-MapGL)
+- Cloudinary
+- Google API's
 
    
 ## Approach Taken
@@ -96,11 +99,18 @@ def search(name):
     return site_schema.jsonify(matches, many=True), 200
 
  ```
+## Future Enhancements
+ - Ratings to be imported from google or tripadvisor,
+ - Adding a section of "popular locations" nearby in the single page,
+ - Pagination and filtering options
+ 
 ## Challenges
 
 This is the first project I have used `Python` for. One of the challenges was that in `Python` there is an extra layer of `serializers` between the objects   and their `JSON` form  compare to `javaScript`. Getting these right certainly took some time researching of best practices and reading up on the subject.
 
 Working with a relational database was also a challenge that I had to overcome. After you understand the core concepts it is quite clear that it offers a robust solution for modeling complex domains. 
+
+## Lessons learned
 
 We used the Google Places API to get the pictures for the app. Unfortunately during our development period we used up the number of requests given by the API. We managed to get a new key for the deployment in time and had a successful demo. Paying attention to `API` quotas and monitoring your usage was certainly  one of the key lessons learned in this project. 
 
@@ -109,6 +119,6 @@ We used the Google Places API to get the pictures for the app. Unfortunately dur
 
 We had lots more ideas that we couldn't fit in the timescale. Such as showing the sites on a scalable map page, displaying recommendations on the single page and extending the search functionality with additional filters. 
 
-Overall,  we both enjoyed the project learned a lot especially about `Python`, `RDBMS`. We are excited to continue work on it, so these features will be added over time.
+We both enjoyed the project learned a lot especially about `Python`, `RDBMS`. We are excited to continue work on it, so these features will be added over time.
  
 
