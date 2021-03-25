@@ -10,7 +10,7 @@ Quick peek of the working app ⬇️
 
 
 ## Overview
-The concept was to work remotely in a group of two - I have contributed with [Baltasar Romero](https://github.com/Baromeg) - for 7 days to create a full-stack web application. Using the Flask Framework to serve data from a PostgreSQL database to a React front end. The application must demonstrate the use of multiple relationships and CRUD functionality for the intended models. Plan and create an Entity Relationship Diagram, prior to moving on to development.
+The concept was to work remotely in a group of two - for 7 days to create a full-stack web application. Using the Flask Framework to serve data from a PostgreSQL database to a React front end. The application must demonstrate the use of multiple relationships and CRUD functionality for the intended models. Plan and create an Entity Relationship Diagram, prior to moving on to development.
  
 ## Brief
 - Build a full-stack application by making your own database using PostgreSQL
