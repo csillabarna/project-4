@@ -3,7 +3,6 @@
 # Know Your Heritage 
 A PostgreSQL, Python, Flask & React Full Stack Application which showcases UNESCO's world heritage list. The user is able to comment on sites and add their favourites to the wish list. 
 
-Deployed on Heroku: [Know Your Heritage](https://know-your-heritage.herokuapp.com)
 
 Quick peek of the working app ⬇️
 
